@@ -11,7 +11,7 @@ namespace Enigma_WPF
         private Reflector reflector;
         public EnigmaMachine()
         {
-            workingRotors = new Rotor[3] { Rotor.CreateRotor(PartName.RotorI), Rotor.CreateRotor(PartName.RotorII), Rotor.CreateRotor(PartName.RotorIII) };
+            workingRotors = new Rotor[5] { Rotor.CreateRotor(PartType.RotorI), Rotor.CreateRotor(PartType.RotorII), Rotor.CreateRotor(PartType.RotorIII), Rotor.CreateRotor(PartType.RotorIV), null };
             reflector = Reflector.UKW_B();
         }
         public Rotor GetRotor(int rotNum)
@@ -21,6 +21,10 @@ namespace Enigma_WPF
         public Rotor[] GetAllRotors()
         {
             return workingRotors;
+        }
+        public Reflector GetReflector()
+        {
+            return reflector;
         }
         public void SetRotor(int rotNum, Rotor newRotor)
         {
@@ -34,18 +38,6 @@ namespace Enigma_WPF
         {
             TurnOver();
             MutateSignal(input, out output);
-        }
-        public void ManuallyTurn(int rotNum, TurningDirection direction)
-        {
-            switch (direction)
-            {
-                case TurningDirection.Forward:
-                    workingRotors[rotNum].ForwardTurn();
-                    break;
-                case TurningDirection.Reverse:
-                    workingRotors[rotNum].ReverseTurn();
-                    break;
-            }
         }
         private void TurnOver()
         {
@@ -70,12 +62,18 @@ namespace Enigma_WPF
             int signal = input;
             for (int i = 0; i < workingRotors.Length; i++)
             {
-                workingRotors[i].ForwardInput(signal, out signal);
+                if (workingRotors[i] != null)
+                {
+                    workingRotors[i].ForwardInput(signal, out signal);
+                }
             }
             reflector.Input(signal, out signal);
             for (int i = workingRotors.Length - 1; i >= 0; i--)
             {
-                workingRotors[i].ReverseInput(signal, out signal);
+                if (workingRotors[i] != null)
+                {
+                    workingRotors[i].ReverseInput(signal, out signal);
+                }
             }
             output = signal;
         }

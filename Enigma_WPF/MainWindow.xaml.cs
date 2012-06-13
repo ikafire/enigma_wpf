@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 //========================
 using System.Media;
+using System.Collections.ObjectModel;
 //========================
 
 namespace Enigma_WPF
@@ -27,25 +28,53 @@ namespace Enigma_WPF
             InitializeComponent();
             //==================
             SetWindowsBinding();
+            SetTooltipBinding();
             //==================
         }
         //==========================================
         List<Key> availableKeys = new List<Key> { Key.A, Key.B, Key.C, Key.D, Key.E, Key.F, Key.G, Key.H, Key.I, Key.J, Key.K, Key.L, Key.M, Key.N, Key.O, Key.P, Key.Q, Key.R, Key.S, Key.T, Key.U, Key.V, Key.W, Key.X, Key.Y, Key.Z, Key.Back, Key.Space };
         SoundPlayer typingSound = new SoundPlayer(Properties.Resources.typewriter1);
         SoundPlayer spacingSound = new SoundPlayer(Properties.Resources.typewriter2);
-        Operator op = new Operator();
-        bool mute = false;
+        EnigmaOperator enigmaOp = new EnigmaOperator();
+        bool isMute = false;
         private void SetWindowsBinding()
         {
-            Binding windowBind0 = new Binding("RotorWindow0");
-            windowBind0.Source = this.op;
-            Binding windowBind1 = new Binding("RotorWindow1");
-            windowBind1.Source = this.op;
-            Binding windowBind2 = new Binding("RotorWindow2");
-            windowBind2.Source = this.op;
+            Binding windowBind0 = new Binding("RotorWindows[0]");
+            windowBind0.Source = this.enigmaOp;
+            Binding windowBind1 = new Binding("RotorWindows[1]");
+            windowBind1.Source = this.enigmaOp;
+            Binding windowBind2 = new Binding("RotorWindows[2]");
+            windowBind2.Source = this.enigmaOp;
+            Binding windowBind3 = new Binding("RotorWindows[3]");
+            windowBind3.Source = this.enigmaOp;
+            Binding windowBind4 = new Binding("RotorWindows[4]");
+            windowBind4.Source = this.enigmaOp;
             textBlock_RotorWindow0.SetBinding(TextBlock.TextProperty, windowBind0);
             textBlock_RotorWindow1.SetBinding(TextBlock.TextProperty, windowBind1);
             textBlock_RotorWindow2.SetBinding(TextBlock.TextProperty, windowBind2);
+            textBlock_RotorWindow3.SetBinding(TextBlock.TextProperty, windowBind3);
+            textBlock_RotorWindow4.SetBinding(TextBlock.TextProperty, windowBind4);
+        }
+        private void SetTooltipBinding()
+        {
+            Binding bind0 = new Binding("RotorNames[0]");
+            bind0.Source = this.enigmaOp;
+            Binding bind1 = new Binding("RotorNames[1]");
+            bind1.Source = this.enigmaOp;
+            Binding bind2 = new Binding("RotorNames[2]");
+            bind2.Source = this.enigmaOp;
+            Binding bind3 = new Binding("RotorNames[3]");
+            bind3.Source = this.enigmaOp;
+            Binding bind4 = new Binding("RotorNames[4]");
+            bind4.Source = this.enigmaOp;
+            textBlock_RotorWindow0.SetBinding(TextBlock.ToolTipProperty, bind0);
+            textBlock_RotorWindow1.SetBinding(TextBlock.ToolTipProperty, bind1);
+            textBlock_RotorWindow2.SetBinding(TextBlock.ToolTipProperty, bind2);
+            textBlock_RotorWindow3.SetBinding(TextBlock.ToolTipProperty, bind3);
+            textBlock_RotorWindow4.SetBinding(TextBlock.ToolTipProperty, bind4);
+            Binding refBind = new Binding("ReflectorName");
+            refBind.Source = this.enigmaOp;
+            textBlock_Reflector.SetBinding(TextBlock.ToolTipProperty, refBind);
         }
 
         private void button_ClearText_Click(object sender, RoutedEventArgs e)
@@ -54,26 +83,9 @@ namespace Enigma_WPF
             textBox_Output.Text = string.Empty;
         }
 
-        private void button_Mute_Click(object sender, RoutedEventArgs e)
-        {
-            Button muteButton = (Button)sender;
-            if (muteButton.Tag.ToString() == "on")  //which means SE is now on
-            {
-                mute = true;
-                muteButton.Tag = "off";
-                muteButton.Content = "Sound : Off";
-            }
-            else
-            {
-                mute = false;
-                muteButton.Tag = "on";
-                muteButton.Content = "Sound : On";
-            }
-        }
-
         private void button_Reset_Click(object sender, RoutedEventArgs e)
         {
-            op.ResetRotorPosition();
+            enigmaOp.ResetRotorPosition();
             textBox_Input.Text = string.Empty;
             textBox_Output.Text = string.Empty;
         }
@@ -91,7 +103,7 @@ namespace Enigma_WPF
             else
                 throw new ArgumentException("Invalid button tag ({0})", turnButton.Name);
             rotNum = int.Parse(tag[1].ToString());
-            op.TurnRotor(rotNum, direction);
+            enigmaOp.TurnRotor(rotNum, direction);
         }
 
         private void grid_Main_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -106,20 +118,34 @@ namespace Enigma_WPF
             }
             else if (e.Key == Key.Space)
             {
-                if (!mute) spacingSound.Play();
+                if (!isMute) spacingSound.Play();
                 textBox_Input.Text += '_';
                 textBox_Output.Text += '_';
             }
             else
             {
-                if (!mute) typingSound.Play();
+                if (!isMute) typingSound.Play();
                 char input = e.Key.ToString()[0];
                 textBox_Input.Text += input;
                 char output;
-                op.InputChar(input, out output);
+                enigmaOp.InputChar(input, out output);
                 textBox_Output.Text += output;
             }
+        }
 
+        private void menuItem_Sound_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem soundMenu = (MenuItem)sender;
+            if (isMute)
+            {
+                isMute = false;
+                soundMenu.Header = "Sound: On";
+            }
+            else
+            {
+                isMute = true;
+                soundMenu.Header = "Sound: Off";
+            }
         }
         //==========================================
     }

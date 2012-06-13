@@ -8,6 +8,7 @@ namespace Enigma_WPF
     abstract class ElectricalPart
     {
         protected int[] wiring;
-        public PartName Name { get; private set; }
+        public PartType Type { get; protected set; }
+        public string Name { get; set; }
     }
 }

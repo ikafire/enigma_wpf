@@ -6,32 +6,31 @@ using System.ComponentModel;
 
 namespace Enigma_WPF
 {
-    class Operator : INotifyPropertyChanged
+    class EnigmaOperator : INotifyPropertyChanged
     {
         private EnigmaMachine enigma;
         private static readonly char[] convert = new char[26] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-        private char[] rotorWindows = new char[5];    //WARNING: DO NOT SET THIS VALUE DIRECTLY, SET IT THROUGH PROPERTIES
+        private char[] rotorWindows = new char[5];    //WARNING: DO NOT SET THIS VALUE DIRECTLY, USE UpdateWindows()
+        private string[] rotorNames = new string[5];  //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
+        private string reflectorName;   //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public char RotorWindow0
+        public char[] RotorWindows
         {
-            get { return rotorWindows[0]; }
-            private set { SetWindow(0, value); }
+            get { return rotorWindows; }
         }
-        public char RotorWindow1
+        public string[] RotorNames
         {
-            get { return rotorWindows[1]; }
-            private set { SetWindow(1, value); }
+            get { return rotorNames; }
         }
-        public char RotorWindow2
+        public string ReflectorName
         {
-            get { return rotorWindows[2]; }
-            private set { SetWindow(2, value); }
+            get { return reflectorName; }
         }
-        public Operator()
+        public EnigmaOperator()
         {
             enigma = new EnigmaMachine();
             UpdateWindows();
+            UpdatePartNames();
         }
         public void InputChar(char input, out char output)
         {
@@ -43,6 +42,7 @@ namespace Enigma_WPF
         public void TurnRotor(int rotorNum, TurningDirection direction)
         {
             Rotor rot = enigma.GetRotor(rotorNum);
+            if (rot == null) return;
             switch (direction)
             {
                 case TurningDirection.Forward:
@@ -58,8 +58,11 @@ namespace Enigma_WPF
         {
             Rotor[] rots = enigma.GetAllRotors();
             foreach (Rotor rot in rots)
-            { 
-                rot.ResetPosition();
+            {
+                if (rot != null)
+                {
+                    rot.ResetPosition();
+                }
             }
             UpdateWindows();
         }
@@ -67,9 +70,42 @@ namespace Enigma_WPF
         private void UpdateWindows()
         {
             Rotor[] rotors = enigma.GetAllRotors();
-            RotorWindow0 = IntToChar(rotors[0].CurrentPosition);
-            RotorWindow1 = IntToChar(rotors[1].CurrentPosition);
-            RotorWindow2 = IntToChar(rotors[2].CurrentPosition);
+            for (int i = 0; i < 5; i++)
+            {
+                if (rotors[i] != null)
+                {
+                    rotorWindows[i] = IntToChar(rotors[i].CurrentPosition);
+                }
+                else
+                {
+                    rotorWindows[i] = ' ';
+                }
+            }
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("RotorWindows"));
+            }
+        }
+        private void UpdatePartNames()
+        {
+            Rotor[] rotors = enigma.GetAllRotors();
+            for (int i = 0; i < 5; i++)
+            {
+                if (rotors[i] != null)
+                {
+                    rotorNames[i] = rotors[i].Name;
+                }
+                else
+                {
+                    rotorNames[i] = "Not Used";
+                }
+            }
+            reflectorName = enigma.GetReflector().Name;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("RotorNames"));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("ReflectorName"));
+            }
         }
         private int CharToInt(char c)
         {
@@ -78,17 +114,6 @@ namespace Enigma_WPF
         private char IntToChar(int num)
         {
             return convert[num];
-        }
-        private bool SetWindow(int windowNum, char value)
-        {
-            if (rotorWindows[windowNum] == value) return false;
-            rotorWindows[windowNum] = value;
-            if (PropertyChanged != null)
-            {
-                string propertyName = String.Format("RotorWindow{0}", windowNum);
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-            return true;
         }
     }
 }
