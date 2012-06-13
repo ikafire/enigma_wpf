@@ -133,7 +133,7 @@ namespace Enigma_WPF
             }
         }
 
-        private void menuItem_Sound_Click(object sender, RoutedEventArgs e)
+        private void menuItem_ToggleSound_Click(object sender, RoutedEventArgs e)
         {
             MenuItem soundMenu = (MenuItem)sender;
             if (isMute)
@@ -146,6 +146,12 @@ namespace Enigma_WPF
                 isMute = true;
                 soundMenu.Header = "Sound: Off";
             }
+        }
+
+        private void menuItem_SelectRotor_Click(object sender, RoutedEventArgs e)
+        {
+            RotorSelectingWindow selectWindow = new RotorSelectingWindow(this.enigmaOp);
+            selectWindow.ShowDialog();
         }
         //==========================================
     }

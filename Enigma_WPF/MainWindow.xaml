@@ -38,8 +38,11 @@
         </Grid>
         <Button Content="Clear" Height="23" Margin="0,0,12,12" Name="button_ClearText" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="button_ClearText_Click" ToolTip="Clear text" />
         <Button Content="Reset" Height="23" HorizontalAlignment="Right" Margin="0,0,102,12" Name="button_Reset" VerticalAlignment="Bottom" Width="75" Click="button_Reset_Click" ToolTip="Clear text and reset rotor position" />
-        <Menu Height="23" Name="menu1" VerticalAlignment="Top">
-            <MenuItem Header="Sound: On" Name="menuItem_Sound" Click="menuItem_Sound_Click" />
+        <Menu Height="23" Name="menu_MainMenu" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto">
+            <MenuItem Header="Enigma">
+                <MenuItem Name="menuItem_SelectRotor" Header="Select Rotors" Click="menuItem_SelectRotor_Click"/>
+                <MenuItem Name="menuItem_ToggleSound" Header="Sound: On" Click="menuItem_ToggleSound_Click"/>
+            </MenuItem>
         </Menu>
     </Grid>
 </Window>

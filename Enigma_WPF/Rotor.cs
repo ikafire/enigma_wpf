@@ -5,11 +5,35 @@ using System.Text;
 
 namespace Enigma_WPF
 {
-    class Rotor : ElectricalPart
+    public class Rotor : ElectricalPart
     {
         private int[] notches;
         public int CurrentPosition { get; private set; }    //the value to show on window
         public int RingPosition { get; set; }   //ring-wiring conformation
+        public int[] Notches
+        {
+            get { return notches.CloneArray(); }
+            set
+            {
+                if (this.Type != PartType.CustomRotor)
+                {
+                    throw new ArgumentException("Cannot set notches for non-custom rotor");
+                }
+                notches = value;
+            }
+        }
+        public int[] Wiring
+        {
+            get { return wiring.CloneArray(); }
+            set
+            {
+                if (this.Type != PartType.CustomRotor)
+                {
+                    throw new ArgumentException("Cannot set wiring for non-custom rotor");
+                }
+                wiring = value;
+            }
+        }
         private Rotor()
         {
             this.CurrentPosition = 0;
@@ -21,6 +45,16 @@ namespace Enigma_WPF
             this.notches = notches;
             RingPosition = 0;
             CurrentPosition = 0;
+        }
+        public Rotor(Rotor target)
+        {
+            if (target == null) return;
+            this.Name = target.Name;
+            this.Type = target.Type;
+            this.wiring = target.wiring.CloneArray();
+            this.notches = target.notches.CloneArray();
+            this.RingPosition = target.RingPosition;
+            this.CurrentPosition = 0;
         }
         public void ForwardTurn()
         {
@@ -49,11 +83,7 @@ namespace Enigma_WPF
         {
             get
             {
-                foreach (int notch in notches)
-                {
-                    if (CurrentPosition == notch)
-                        return true;
-                }
+                if (notches.Contains(CurrentPosition)) return true;
                 return false;
             }
         }
@@ -148,6 +178,25 @@ namespace Enigma_WPF
             customRotor.Type = PartType.CustomRotor;
             customRotor.Name = "custom";
             return customRotor;
+        }
+        public static List<Rotor> CreateAllRotors()
+        {
+            List<Rotor> allRots = new List<Rotor>();
+            foreach (PartType rotType in Enum.GetValues(typeof(PartType)))
+            {
+                try
+                {
+                    allRots.Add(Rotor.CreateRotor(rotType));
+                }
+                catch { }
+            }
+            return allRots;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Rotor) || this.Type == PartType.CustomRotor) return false;
+            Rotor target = (Rotor)obj;
+            return this.Type == target.Type;
         }
     }
 }

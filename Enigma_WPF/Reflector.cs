@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Enigma_WPF
 {
-    class Reflector : ElectricalPart
+    public class Reflector : ElectricalPart
     {
         private Reflector(int[] wiring, PartType type)
         {

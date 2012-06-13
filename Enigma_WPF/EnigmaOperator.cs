@@ -6,13 +6,13 @@ using System.ComponentModel;
 
 namespace Enigma_WPF
 {
-    class EnigmaOperator : INotifyPropertyChanged
+    public class EnigmaOperator : INotifyPropertyChanged
     {
         private EnigmaMachine enigma;
-        private static readonly char[] convert = new char[26] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
         private char[] rotorWindows = new char[5];    //WARNING: DO NOT SET THIS VALUE DIRECTLY, USE UpdateWindows()
         private string[] rotorNames = new string[5];  //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
         private string reflectorName;   //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
+        private List<Rotor> availableRotors;
         public event PropertyChangedEventHandler PropertyChanged;
         public char[] RotorWindows
         {
@@ -26,17 +26,26 @@ namespace Enigma_WPF
         {
             get { return reflectorName; }
         }
+        public List<Rotor> WorkingRotors
+        {
+            get { return enigma.WorkingRotors.ToListWithoutNull().DeepCopy(); }
+        }
+        public List<Rotor> AllRotors
+        {
+            get { return availableRotors.DeepCopy(); }
+        }
         public EnigmaOperator()
         {
-            enigma = new EnigmaMachine();
+            availableRotors = Rotor.CreateAllRotors();
+            enigma = new EnigmaMachine(availableRotors[0], availableRotors[1], availableRotors[2]);
             UpdateWindows();
             UpdatePartNames();
         }
         public void InputChar(char input, out char output)
         {
-            int signal = CharToInt(input);
+            int signal = Util.CharToInt(input);
             enigma.InputSignal(signal, out signal);
-            output = IntToChar(signal);
+            output = Util.IntToChar(signal);
             UpdateWindows();
         }
         public void TurnRotor(int rotorNum, TurningDirection direction)
@@ -56,7 +65,7 @@ namespace Enigma_WPF
         }
         public void ResetRotorPosition()
         {
-            Rotor[] rots = enigma.GetAllRotors();
+            Rotor[] rots = enigma.WorkingRotors;
             foreach (Rotor rot in rots)
             {
                 if (rot != null)
@@ -66,15 +75,26 @@ namespace Enigma_WPF
             }
             UpdateWindows();
         }
+        public void SetRotors(List<Rotor> allRots, params int[] workRotIndex)
+        {
+            availableRotors = allRots;
+            if (workRotIndex.Length > 5 || workRotIndex.Length <= 0)
+            {
+                throw new ArgumentOutOfRangeException("Working rotor count out of range");
+            }
+            List<Rotor> workRots = new List<Rotor>(workRotIndex.Length);
+            workRotIndex.ForEach(i => workRots.Add(availableRotors[i]));
+            enigma.WorkingRotors = workRots.ToArray();
+        }
 
         private void UpdateWindows()
         {
-            Rotor[] rotors = enigma.GetAllRotors();
+            Rotor[] rotors = enigma.WorkingRotors;
             for (int i = 0; i < 5; i++)
             {
                 if (rotors[i] != null)
                 {
-                    rotorWindows[i] = IntToChar(rotors[i].CurrentPosition);
+                    rotorWindows[i] = Util.IntToChar(rotors[i].CurrentPosition);
                 }
                 else
                 {
@@ -88,7 +108,7 @@ namespace Enigma_WPF
         }
         private void UpdatePartNames()
         {
-            Rotor[] rotors = enigma.GetAllRotors();
+            Rotor[] rotors = enigma.WorkingRotors;
             for (int i = 0; i < 5; i++)
             {
                 if (rotors[i] != null)
@@ -100,20 +120,12 @@ namespace Enigma_WPF
                     rotorNames[i] = "Not Used";
                 }
             }
-            reflectorName = enigma.GetReflector().Name;
+            reflectorName = enigma.Reflector.Name;
             if (PropertyChanged != null)
             {
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs("RotorNames"));
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs("ReflectorName"));
             }
-        }
-        private int CharToInt(char c)
-        {
-            return Array.FindIndex(convert, target => target == c);
-        }
-        private char IntToChar(int num)
-        {
-            return convert[num];
         }
     }
 }

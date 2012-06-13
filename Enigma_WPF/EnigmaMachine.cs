@@ -5,34 +5,32 @@ using System.Text;
 
 namespace Enigma_WPF
 {
-    class EnigmaMachine
+    public class EnigmaMachine
     {
-        private Rotor[] workingRotors;
-        private Reflector reflector;
-        public EnigmaMachine()
+        //public EnigmaMachine()
+        //{
+        //    WorkingRotors = new Rotor[5] { Rotor.CreateRotor(PartType.RotorIII), Rotor.CreateRotor(PartType.RotorIV), Rotor.CreateRotor(PartType.RotorII), null, null };
+        //    Reflector = Reflector.UKW_B();
+        //}
+        public EnigmaMachine(params Rotor[] rots)
         {
-            workingRotors = new Rotor[5] { Rotor.CreateRotor(PartType.RotorI), Rotor.CreateRotor(PartType.RotorII), Rotor.CreateRotor(PartType.RotorIII), Rotor.CreateRotor(PartType.RotorIV), null };
-            reflector = Reflector.UKW_B();
+            if (rots.Length > 5)
+            {
+                throw new ArgumentOutOfRangeException("more than 5 rotor params when constructing EnigmaMachine");
+            }
+            WorkingRotors = new Rotor[5];
+            for (int i = 0; i < 5; i++)
+            {
+                try { WorkingRotors[i] = rots[i]; }
+                catch { WorkingRotors[i] = null; }
+            }
+            Reflector = Reflector.UKW_B();
         }
+        public Reflector Reflector { get; set; }
+        public Rotor[] WorkingRotors { get; set; }
         public Rotor GetRotor(int rotNum)
         {
-            return workingRotors[rotNum];
-        }
-        public Rotor[] GetAllRotors()
-        {
-            return workingRotors;
-        }
-        public Reflector GetReflector()
-        {
-            return reflector;
-        }
-        public void SetRotor(int rotNum, Rotor newRotor)
-        {
-            workingRotors[rotNum] = newRotor;
-        }
-        public void SetReflector(Reflector newReflector)
-        {
-            this.reflector = newReflector;
+            return WorkingRotors[rotNum];
         }
         public void InputSignal(int input, out int output)
         {
@@ -41,42 +39,37 @@ namespace Enigma_WPF
         }
         private void TurnOver()
         {
-            if (workingRotors[1].isNotch)
+            if (WorkingRotors[1].isNotch)
             {
-                workingRotors[0].ForwardTurn();
-                workingRotors[1].ForwardTurn();
-                workingRotors[2].ForwardTurn();
+                WorkingRotors[0].ForwardTurn();
+                WorkingRotors[1].ForwardTurn();
+                WorkingRotors[2].ForwardTurn();
             }
-            else if (workingRotors[0].isNotch)
+            else if (WorkingRotors[0].isNotch)
             {
-                workingRotors[0].ForwardTurn();
-                workingRotors[1].ForwardTurn();
+                WorkingRotors[0].ForwardTurn();
+                WorkingRotors[1].ForwardTurn();
             }
             else
             {
-                workingRotors[0].ForwardTurn();
+                WorkingRotors[0].ForwardTurn();
             }
         }
         private void MutateSignal(int input, out int output)
         {
             int signal = input;
-            for (int i = 0; i < workingRotors.Length; i++)
-            {
-                if (workingRotors[i] != null)
+            WorkingRotors.ForEach(rot =>
                 {
-                    workingRotors[i].ForwardInput(signal, out signal);
-                }
-            }
-            reflector.Input(signal, out signal);
-            for (int i = workingRotors.Length - 1; i >= 0; i--)
-            {
-                if (workingRotors[i] != null)
+                    if (rot != null)
+                        rot.ForwardInput(signal, out signal);
+                });
+            Reflector.Input(signal, out signal);
+            WorkingRotors.ReverseForEach(rot =>
                 {
-                    workingRotors[i].ReverseInput(signal, out signal);
-                }
-            }
+                    if (rot != null) 
+                        rot.ReverseInput(signal, out signal);
+                });
             output = signal;
         }
-
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Enigma_WPF
 {
-    abstract class ElectricalPart
+    public abstract class ElectricalPart
     {
         protected int[] wiring;
         public PartType Type { get; protected set; }
