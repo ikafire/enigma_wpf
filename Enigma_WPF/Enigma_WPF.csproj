@@ -60,7 +60,6 @@
     <Compile Include="PublicEnums.cs" />
     <Compile Include="Reflector.cs" />
     <Compile Include="Rotor.cs" />
-    <Compile Include="Util.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
