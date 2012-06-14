@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 //=========
 using System.Collections.ObjectModel;
+using System.Media;
 //=========
 
 namespace Enigma_WPF
@@ -24,36 +25,53 @@ namespace Enigma_WPF
         public RotorSelectingWindow(EnigmaOperator enigmaOp)
         {
             InitializeComponent();
+            //============================
             this.enigmaOp = enigmaOp;
-            allRotors = new ObservableCollection<Rotor>(enigmaOp.AllRotors);
-            workRotors = new ObservableCollection<Rotor>(enigmaOp.WorkingRotors);
-            workRotors.ForEach(workRot => allRotors.Remove(workRot));
+            unusedRots = new ObservableCollection<Rotor>(enigmaOp.UnusedRotors);
+            workRots = new ObservableCollection<Rotor>(enigmaOp.WorkingRotors);
         }
-
-        //================================
         private EnigmaOperator enigmaOp;
-        private ObservableCollection<Rotor> allRotors = new ObservableCollection<Rotor>();
-        private ObservableCollection<Rotor> workRotors = new ObservableCollection<Rotor>();
+        private ObservableCollection<Rotor> unusedRots = new ObservableCollection<Rotor>();
+        private ObservableCollection<Rotor> workRots = new ObservableCollection<Rotor>();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            listBox_AllRotors.ItemsSource = allRotors;
-            listBox_RotorsToWork.ItemsSource = workRotors;
+            listBox_AllRotors.ItemsSource = unusedRots;
+            listBox_RotorsToWork.ItemsSource = workRots;
         }
 
         private void button_AddRotor_Click(object sender, RoutedEventArgs e)
         {
             if (listBox_AllRotors.SelectedItem == null) return;
             Rotor selectedRot=(Rotor)listBox_AllRotors.SelectedItem;
-            allRotors.Remove(selectedRot);
-            workRotors.Add(selectedRot);
+            unusedRots.Remove(selectedRot);
+            workRots.Add(selectedRot);
         }
 
         private void button_RemoveRotor_Click(object sender, RoutedEventArgs e)
         {
             if (listBox_RotorsToWork.SelectedItem == null) return;
             Rotor selectedRot = (Rotor)listBox_RotorsToWork.SelectedItem;
-            workRotors.Remove(selectedRot);
-            allRotors.Add(selectedRot);
+            workRots.Remove(selectedRot);
+            unusedRots.Add(selectedRot);
+        }
+
+        private void button_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button_Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                enigmaOp.ChangeRotors(workRots.ToList(), unusedRots.ToList());
+                this.Close();
+            }
+            catch
+            {
+                Util.Ding();
+                MessageBox.Show("Working rotor number must between 1~5");
+            }
         }
 
         //================================

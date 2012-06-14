@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Documents;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Media;
 
 namespace Enigma_WPF
 {
@@ -67,6 +68,21 @@ namespace Enigma_WPF
                 if (collection[i] == null)
                     collection.RemoveAt(i);
             }
+        }
+        public static int GetRotorCount(this Rotor[] rotArray)
+        {
+            if (rotArray.Length != 5)
+                throw new ArgumentException("Length of working rotor array isn't five");
+            for (int i = 0; i < 5; i++)
+            {
+                if (rotArray[i] == null) return i;
+            }
+            return 5;
+        }
+        public static void Ding()
+        {
+            SoundPlayer ding = new SoundPlayer();
+            ding.Play();
         }
         public static int CharToInt(char c)
         {

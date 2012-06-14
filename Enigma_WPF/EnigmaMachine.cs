@@ -28,10 +28,10 @@ namespace Enigma_WPF
         }
         public Reflector Reflector { get; set; }
         public Rotor[] WorkingRotors { get; set; }
-        public Rotor GetRotor(int rotNum)
-        {
-            return WorkingRotors[rotNum];
-        }
+        //public Rotor GetRotor(int rotNum)
+        //{
+        //    return WorkingRotors[rotNum];
+        //}
         public void InputSignal(int input, out int output)
         {
             TurnOver();
@@ -39,21 +39,26 @@ namespace Enigma_WPF
         }
         private void TurnOver()
         {
-            if (WorkingRotors[1].isNotch)
+            if (WorkingRotors.GetRotorCount() >= 3)
             {
-                WorkingRotors[0].ForwardTurn();
-                WorkingRotors[1].ForwardTurn();
-                WorkingRotors[2].ForwardTurn();
+                if (WorkingRotors[1].isNotch)
+                {
+                    WorkingRotors[0].ForwardTurn();
+                    WorkingRotors[1].ForwardTurn();
+                    WorkingRotors[2].ForwardTurn();
+                    return;
+                }
             }
-            else if (WorkingRotors[0].isNotch)
+            if (WorkingRotors.GetRotorCount() >= 2)
             {
-                WorkingRotors[0].ForwardTurn();
-                WorkingRotors[1].ForwardTurn();
+                if (WorkingRotors[0].isNotch)
+                {
+                    WorkingRotors[0].ForwardTurn();
+                    WorkingRotors[1].ForwardTurn();
+                    return;
+                }
             }
-            else
-            {
-                WorkingRotors[0].ForwardTurn();
-            }
+            WorkingRotors[0].ForwardTurn();
         }
         private void MutateSignal(int input, out int output)
         {

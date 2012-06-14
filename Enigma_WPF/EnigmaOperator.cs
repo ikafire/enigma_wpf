@@ -12,7 +12,7 @@ namespace Enigma_WPF
         private char[] rotorWindows = new char[5];    //WARNING: DO NOT SET THIS VALUE DIRECTLY, USE UpdateWindows()
         private string[] rotorNames = new string[5];  //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
         private string reflectorName;   //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
-        private List<Rotor> availableRotors;
+        private List<Rotor> allRotors;
         public event PropertyChangedEventHandler PropertyChanged;
         public char[] RotorWindows
         {
@@ -30,14 +30,23 @@ namespace Enigma_WPF
         {
             get { return enigma.WorkingRotors.ToListWithoutNull(); }
         }
-        public List<Rotor> AllRotors
+        //public List<Rotor> AllRotors
+        //{
+        //    get { return new List<Rotor>(allRotors); }
+        //}
+        public List<Rotor> UnusedRotors
         {
-            get { return new List<Rotor>(availableRotors); }
+            get
+            {
+                List<Rotor> unused = new List<Rotor>(allRotors);
+                WorkingRotors.ForEach(rot => unused.Remove(rot));
+                return unused;
+            }
         }
         public EnigmaOperator()
         {
-            availableRotors = Rotor.CreateAllRotors();
-            enigma = new EnigmaMachine(availableRotors[0], availableRotors[1], availableRotors[2]);
+            allRotors = Rotor.CreateAllRotors();
+            enigma = new EnigmaMachine(allRotors[0], allRotors[1], allRotors[2]);
             UpdateWindows();
             UpdatePartNames();
         }
@@ -48,9 +57,9 @@ namespace Enigma_WPF
             output = Util.IntToChar(signal);
             UpdateWindows();
         }
-        public void TurnRotor(int rotorNum, TurningDirection direction)
+        public void TurnRotor(int rotNum, TurningDirection direction)
         {
-            Rotor rot = enigma.GetRotor(rotorNum);
+            Rotor rot = enigma.WorkingRotors[rotNum];
             if (rot == null) return;
             switch (direction)
             {
@@ -75,16 +84,37 @@ namespace Enigma_WPF
             }
             UpdateWindows();
         }
-        public void SetRotors(List<Rotor> allRots, params int[] workRotIndex)
+        //public void SetRotors(List<Rotor> allRots, params int[] workRotIndex)
+        //{
+        //    allRotors = allRots;
+        //    if (workRotIndex.Length > 5 || workRotIndex.Length <= 0)
+        //    {
+        //        throw new ArgumentOutOfRangeException("Working rotor count out of range");
+        //    }
+        //    List<Rotor> workRots = new List<Rotor>(workRotIndex.Length);
+        //    workRotIndex.ForEach(i => workRots.Add(allRotors[i]));
+        //    enigma.WorkingRotors = workRots.ToArray();
+        //}
+        public void ChangeRotors(List<Rotor> workRots, List<Rotor> unusedRots)
         {
-            availableRotors = allRots;
-            if (workRotIndex.Length > 5 || workRotIndex.Length <= 0)
+            if (workRots.Count <= 0)
             {
-                throw new ArgumentOutOfRangeException("Working rotor count out of range");
+                throw new ArgumentOutOfRangeException("There must be atleast one working rotor.");
             }
-            List<Rotor> workRots = new List<Rotor>(workRotIndex.Length);
-            workRotIndex.ForEach(i => workRots.Add(availableRotors[i]));
-            enigma.WorkingRotors = workRots.ToArray();
+            if (workRots.Count > 5)
+            {
+                throw new ArgumentOutOfRangeException("There can't be more than five working rotors.");
+            }
+            Rotor[] workRotArray = new Rotor[5];
+            for (int i = 0; i < 5; i++)
+            {
+                try { workRotArray[i] = workRots[i]; }
+                catch { workRotArray[i] = null; }
+            }
+            enigma.WorkingRotors = workRotArray;
+            allRotors = unusedRots.Concat(workRots).ToList();
+            UpdateWindows();
+            UpdatePartNames();
         }
 
         private void UpdateWindows()

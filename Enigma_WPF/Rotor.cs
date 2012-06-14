@@ -7,6 +7,7 @@ namespace Enigma_WPF
 {
     public class Rotor : ElectricalPart
     {
+        private static int numOfCustomRot = 0;
         private int[] notches;
         public int CurrentPosition { get; private set; }    //the value to show on window
         public int RingPosition { get; set; }   //ring-wiring conformation
@@ -34,11 +35,7 @@ namespace Enigma_WPF
                 wiring = value;
             }
         }
-        private Rotor()
-        {
-            this.CurrentPosition = 0;
-            this.RingPosition = 0;
-        }
+        private Rotor() { }
         private Rotor(int[] wiring, int[] notches, PartType type)
         {
             this.wiring = wiring;
@@ -83,6 +80,7 @@ namespace Enigma_WPF
         {
             get
             {
+                if (notches == null) return false;
                 if (notches.Contains(CurrentPosition)) return true;
                 return false;
             }
@@ -100,7 +98,7 @@ namespace Enigma_WPF
             if (pos < 0 || pos >= 26) throw new ArgumentOutOfRangeException("Ring position out of range");
             RingPosition = pos;
         }
-        public static Rotor CreateRotor(PartType type)
+        private static Rotor OfficialRotor(PartType type)
         {
             int[] wiring, notch;
             switch (type)
@@ -174,10 +172,14 @@ namespace Enigma_WPF
         }
         public static Rotor CustomRotor()
         {
-            Rotor customRotor = new Rotor();
-            customRotor.Type = PartType.CustomRotor;
-            customRotor.Name = "custom";
-            return customRotor;
+            Rotor customRot = new Rotor();
+            customRot.Type = PartType.CustomRotor;
+            customRot.Name = string.Format("CustomRotor{0}", ++numOfCustomRot);
+            customRot.Notches = null;
+            customRot.Wiring = null;
+            customRot.RingPosition = 0;
+            customRot.CurrentPosition = 0;
+            return customRot;
         }
         public static List<Rotor> CreateAllRotors()
         {
@@ -186,7 +188,7 @@ namespace Enigma_WPF
             {
                 try
                 {
-                    allRots.Add(Rotor.CreateRotor(rotType));
+                    allRots.Add(Rotor.OfficialRotor(rotType));
                 }
                 catch { }
             }
