@@ -28,11 +28,11 @@ namespace Enigma_WPF
         }
         public List<Rotor> WorkingRotors
         {
-            get { return enigma.WorkingRotors.ToListWithoutNull().DeepCopy(); }
+            get { return enigma.WorkingRotors.ToListWithoutNull(); }
         }
         public List<Rotor> AllRotors
         {
-            get { return availableRotors.DeepCopy(); }
+            get { return new List<Rotor>(availableRotors); }
         }
         public EnigmaOperator()
         {

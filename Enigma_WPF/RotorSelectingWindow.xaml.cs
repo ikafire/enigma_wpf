@@ -27,7 +27,6 @@ namespace Enigma_WPF
             this.enigmaOp = enigmaOp;
             allRotors = new ObservableCollection<Rotor>(enigmaOp.AllRotors);
             workRotors = new ObservableCollection<Rotor>(enigmaOp.WorkingRotors);
-            workRotors.RemoveNull();
             workRotors.ForEach(workRot => allRotors.Remove(workRot));
         }
 

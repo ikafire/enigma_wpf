@@ -79,15 +79,15 @@ namespace Enigma_WPF
 
         private void button_ClearText_Click(object sender, RoutedEventArgs e)
         {
-            textBox_Input.Text = string.Empty;
-            textBox_Output.Text = string.Empty;
+            textBox_Input.Clear();
+            textBox_Output.Clear();
         }
 
         private void button_Reset_Click(object sender, RoutedEventArgs e)
         {
             enigmaOp.ResetRotorPosition();
-            textBox_Input.Text = string.Empty;
-            textBox_Output.Text = string.Empty;
+            textBox_Input.Clear();
+            textBox_Output.Clear();
         }
 
         private void button_RotorTurn_Click(object sender, RoutedEventArgs e)
@@ -153,6 +153,36 @@ namespace Enigma_WPF
             RotorSelectingWindow selectWindow = new RotorSelectingWindow(this.enigmaOp);
             selectWindow.ShowDialog();
         }
+
+        //private void button_Paste_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (!Clipboard.ContainsText()) return;
+        //    textBox_Input.Clear();
+        //    textBox_Output.Clear();
+        //    string input = Clipboard.GetText().ToUpperInvariant();
+        //    string output = string.Empty;
+        //    char outChar;
+        //    foreach (char c in input)
+        //    {
+        //        try
+        //        {
+        //            enigmaOp.InputChar(c, out outChar);
+        //            output += outChar;
+        //        }
+        //        catch
+        //        {
+        //            output += c;
+        //        }
+        //    }
+        //    textBox_Input.Text = input;
+        //    textBox_Output.Text = output;
+        //}
+
+        //private void button_Copy_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Clipboard.SetText(textBox_Output.Text);
+        //}
+
         //==========================================
     }
 }

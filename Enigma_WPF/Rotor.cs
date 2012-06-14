@@ -192,11 +192,11 @@ namespace Enigma_WPF
             }
             return allRots;
         }
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Rotor) || this.Type == PartType.CustomRotor) return false;
-            Rotor target = (Rotor)obj;
-            return this.Type == target.Type;
-        }
+        //public override bool Equals(object obj)
+        //{
+        //    if (obj == null || !(obj is Rotor) || this.Type == PartType.CustomRotor) return false;
+        //    Rotor target = (Rotor)obj;
+        //    return this.Type == target.Type;
+        //}
     }
 }

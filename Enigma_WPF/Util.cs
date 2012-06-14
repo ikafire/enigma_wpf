@@ -9,15 +9,15 @@ namespace Enigma_WPF
     static class Util
     {
         private static readonly char[] convert = new char[26] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-        public static List<Rotor> DeepCopy(this List<Rotor> source)
-        {
-            List<Rotor> clone = new List<Rotor>(source.Count);
-            foreach (Rotor sourceRot in source)
-            {
-                clone.Add(new Rotor(sourceRot));
-            }
-            return clone;
-        }
+        //public static List<Rotor> DeepCopy(this List<Rotor> source)
+        //{
+        //    List<Rotor> clone = new List<Rotor>(source.Count);
+        //    foreach (Rotor sourceRot in source)
+        //    {
+        //        clone.Add(new Rotor(sourceRot));
+        //    }
+        //    return clone;
+        //}
         public static int[] CloneArray(this int[] source)
         {
             if (source == null) return null;
@@ -70,7 +70,9 @@ namespace Enigma_WPF
         }
         public static int CharToInt(char c)
         {
-            return Array.FindIndex(convert, target => target == c);
+            int i = Array.FindIndex(convert, target => target == c);
+            if (i < 0) throw new ArgumentOutOfRangeException("cannot find corresbonding char");
+            return i;
         }
         public static char IntToChar(int num)
         {
