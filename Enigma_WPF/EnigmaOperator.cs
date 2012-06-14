@@ -10,7 +10,7 @@ namespace Enigma_WPF
     {
         private EnigmaMachine enigma;
         private char[] rotorWindows = new char[5];    //WARNING: DO NOT SET THIS VALUE DIRECTLY, USE UpdateWindows()
-        private string[] rotorNames = new string[5];  //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
+        private string[] rotorDescriptions = new string[5];  //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
         private string reflectorName;   //WARINIG: DO NOT SET THIS VALUE DIRECTLY, USE UpdatePartNames()
         private List<Rotor> allRotors;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -18,9 +18,9 @@ namespace Enigma_WPF
         {
             get { return rotorWindows; }
         }
-        public string[] RotorNames
+        public string[] RotorDescriptions
         {
-            get { return rotorNames; }
+            get { return rotorDescriptions; }
         }
         public string ReflectorName
         {
@@ -99,7 +99,7 @@ namespace Enigma_WPF
         {
             if (workRots.Count <= 0)
             {
-                throw new ArgumentOutOfRangeException("There must be atleast one working rotor.");
+                throw new ArgumentOutOfRangeException("There must be at least one working rotor.");
             }
             if (workRots.Count > 5)
             {
@@ -143,17 +143,17 @@ namespace Enigma_WPF
             {
                 if (rotors[i] != null)
                 {
-                    rotorNames[i] = rotors[i].Name;
+                    rotorDescriptions[i] = string.Format("Rotor #{0}: {1}", i + 1, rotors[i].Name);
                 }
                 else
                 {
-                    rotorNames[i] = "Not Used";
+                    rotorDescriptions[i] = string.Format("Rotor #{0}: Empty", i + 1);
                 }
             }
             reflectorName = enigma.Reflector.Name;
             if (PropertyChanged != null)
             {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("RotorNames"));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("RotorDescriptions"));
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs("ReflectorName"));
             }
         }

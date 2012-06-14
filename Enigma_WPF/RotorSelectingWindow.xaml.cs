@@ -67,11 +67,17 @@ namespace Enigma_WPF
                 enigmaOp.ChangeRotors(workRots.ToList(), unusedRots.ToList());
                 this.Close();
             }
-            catch
+            catch (ArgumentOutOfRangeException error)
             {
                 Util.Ding();
-                MessageBox.Show("Working rotor number must between 1~5");
+                MessageBox.Show(error.Message);
             }
+        }
+
+        private void button_Sort_Click(object sender, RoutedEventArgs e)
+        {
+            unusedRots = unusedRots.Sorted();
+            listBox_AllRotors.ItemsSource = unusedRots;
         }
 
         //================================

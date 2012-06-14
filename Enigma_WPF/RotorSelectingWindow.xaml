@@ -16,5 +16,6 @@
         <Button Content="&lt;-" Height="23" HorizontalAlignment="Left" Margin="205,150,0,0" Name="button_RemoveRotor" VerticalAlignment="Top" Width="54" Click="button_RemoveRotor_Click" />
         <Button Content="Confirm" Height="23" HorizontalAlignment="Left" Margin="248,296,0,0" Name="button_Confirm" VerticalAlignment="Top" Width="75" Click="button_Confirm_Click" />
         <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="350,296,0,0" Name="button_Cancel" VerticalAlignment="Top" Width="75" Click="button_Cancel_Click" />
+        <Button Content="Sort" Height="23" HorizontalAlignment="Left" Margin="59,296,0,0" Name="button_Sort" VerticalAlignment="Top" Width="75" Click="button_Sort_Click" />
     </Grid>
 </Window>

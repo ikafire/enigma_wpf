@@ -57,15 +57,15 @@ namespace Enigma_WPF
         }
         private void SetTooltipBinding()
         {
-            Binding bind0 = new Binding("RotorNames[0]");
+            Binding bind0 = new Binding("RotorDescriptions[0]");
             bind0.Source = this.enigmaOp;
-            Binding bind1 = new Binding("RotorNames[1]");
+            Binding bind1 = new Binding("RotorDescriptions[1]");
             bind1.Source = this.enigmaOp;
-            Binding bind2 = new Binding("RotorNames[2]");
+            Binding bind2 = new Binding("RotorDescriptions[2]");
             bind2.Source = this.enigmaOp;
-            Binding bind3 = new Binding("RotorNames[3]");
+            Binding bind3 = new Binding("RotorDescriptions[3]");
             bind3.Source = this.enigmaOp;
-            Binding bind4 = new Binding("RotorNames[4]");
+            Binding bind4 = new Binding("RotorDescriptions[4]");
             bind4.Source = this.enigmaOp;
             textBlock_RotorWindow0.SetBinding(TextBlock.ToolTipProperty, bind0);
             textBlock_RotorWindow1.SetBinding(TextBlock.ToolTipProperty, bind1);

@@ -79,6 +79,21 @@ namespace Enigma_WPF
             }
             return 5;
         }
+        public static ObservableCollection<Rotor> Sorted(this ObservableCollection<Rotor> collection)
+        {
+            List<Rotor> list = new List<Rotor>(collection);
+            list.Sort(Util.CompareRotors);
+            return new ObservableCollection<Rotor>(list);
+        }
+        public static int CompareRotors(Rotor x, Rotor y)
+        {
+            if (x == null && y == null) return 0;
+            if (x == null) return -1;
+            if (y == null) return 1;
+            int byType = (x.Type).CompareTo(y.Type);
+            if (byType != 0) return byType;
+            return x.Name.CompareTo(y.Name);
+        }
         public static void Ding()
         {
             SoundPlayer ding = new SoundPlayer();
