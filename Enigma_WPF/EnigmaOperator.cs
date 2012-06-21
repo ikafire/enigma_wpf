@@ -63,9 +63,26 @@ namespace Enigma_WPF
         public void InputChar(char input, out char output)
         {
             int signal = Util.CharToInt(input);
+            if (signal < 0)
+            {
+                output = input;
+                return;
+            }
+
             this.enigma.InputSignal(signal, out signal);
             output = Util.IntToChar(signal);
             this.UpdateWindows();
+        }
+
+        public void InputString(string input, out string output)
+        {
+            output = string.Empty;
+            char outChar;
+            foreach (char inChar in input.ToUpperInvariant())
+            {
+                this.InputChar(inChar, out outChar);
+                output += outChar;
+            }
         }
 
         public void TurnRotor(int rotNum, TurningDirection direction)

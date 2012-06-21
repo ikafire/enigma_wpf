@@ -138,13 +138,7 @@ namespace Enigma_WPF
         
         public static int CharToInt(char c)
         {
-            int i = Array.FindIndex(convert, target => target == c);
-            if (i < 0)
-            {
-                throw new ArgumentOutOfRangeException("cannot find corresbonding char");
-            }
-
-            return i;
+            return Array.FindIndex(convert, target => target == c);
         }
         
         public static char IntToChar(int num)

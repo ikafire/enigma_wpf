@@ -31,11 +31,19 @@ namespace Enigma_WPF
 
         private bool isMute = false;
 
+        private EncryptMode encryptMode = EncryptMode.PerChar;
+
         public MainWindow()
         {
             this.InitializeComponent();
             this.SetWindowsBinding();
             this.SetTooltipBinding();
+        }
+
+        private enum EncryptMode
+        {
+            PerChar,
+            PerString
         }
 
         private void SetWindowsBinding()
@@ -88,8 +96,6 @@ namespace Enigma_WPF
         private void button_Reset_Click(object sender, RoutedEventArgs e)
         {
             this.enigmaOp.ResetRotorPosition();
-            this.textBox_Input.Clear();
-            this.textBox_Output.Clear();
         }
 
         private void button_RotorTurn_Click(object sender, RoutedEventArgs e)
@@ -116,6 +122,14 @@ namespace Enigma_WPF
         }
 
         private void grid_Main_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.encryptMode == EncryptMode.PerChar)
+            {
+                EncryptChar(e);
+            }
+        }
+
+        private void EncryptChar(KeyEventArgs e)
         {
             if (!this.availableKeys.Contains(e.Key))
             {
@@ -151,9 +165,9 @@ namespace Enigma_WPF
                 }
 
                 char input = e.Key.ToString()[0];
-                this.textBox_Input.Text += input;
                 char output;
                 this.enigmaOp.InputChar(input, out output);
+                this.textBox_Input.Text += input;
                 this.textBox_Output.Text += output;
             }
         }
@@ -177,6 +191,35 @@ namespace Enigma_WPF
         {
             RotorSelectingWindow selectWindow = new RotorSelectingWindow(this.enigmaOp);
             selectWindow.ShowDialog();
+        }
+
+        private void menuItem_ToggleEncryptMode_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem modeMenu = (MenuItem)sender;
+            if (this.encryptMode == EncryptMode.PerChar)    // 改成一次加密
+            {
+                this.encryptMode = EncryptMode.PerString;
+                modeMenu.Header = "Encrypt Mode: After confirm";
+                this.button_Encrypt.IsEnabled = true;
+                this.textBox_Input.IsReadOnly = false;
+            }
+            else    // 改成每次加密
+            {
+                this.encryptMode = EncryptMode.PerChar;
+                modeMenu.Header = "Encrypt Mode: Traditional";
+                this.button_Encrypt.IsEnabled = false;
+                this.textBox_Input.IsReadOnly = true;
+                this.textBox_Input.Clear();
+                this.textBox_Output.Clear();
+            }
+        }
+
+        private void button_Encrypt_Click(object sender, RoutedEventArgs e)
+        {
+            string input = this.textBox_Input.Text;
+            string output;
+            this.enigmaOp.InputString(input, out output);
+            this.textBox_Output.Text = output;
         }
     }
 }

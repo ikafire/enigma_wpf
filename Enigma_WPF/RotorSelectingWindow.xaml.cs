@@ -31,7 +31,7 @@ namespace Enigma_WPF
         }
 
         /// <summary>
-        /// Move rotor from unused list to work list
+        /// Move rotor from unused list to work list.
         /// </summary>
         /// <param name="sender">The parameter is not used.</param>
         /// <param name="e">The parameter is not used.</param>
@@ -48,7 +48,7 @@ namespace Enigma_WPF
         }
 
         /// <summary>
-        /// Move rotor from work list to unused list
+        /// Move rotor from work list to unused list.
         /// </summary>
         /// <param name="sender">The parameter is not used.</param>
         /// <param name="e">The parameter is not used.</param>
