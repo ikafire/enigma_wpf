@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-//========================
-using System.Media;
-using System.Collections.ObjectModel;
-//========================
 
 namespace Enigma_WPF
 {
@@ -23,20 +13,31 @@ namespace Enigma_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Key> availableKeys = new List<Key> 
+        { 
+            Key.A, Key.B, Key.C, Key.D, Key.E,
+            Key.F, Key.G, Key.H, Key.I, Key.J,
+            Key.K, Key.L, Key.M, Key.N, Key.O,
+            Key.P, Key.Q, Key.R, Key.S, Key.T,
+            Key.U, Key.V, Key.W, Key.X, Key.Y,
+            Key.Z, Key.Back, Key.Space 
+        };
+        
+        private SoundPlayer typingSound = new SoundPlayer(Properties.Resources.typewriter1);
+        
+        private SoundPlayer spacingSound = new SoundPlayer(Properties.Resources.typewriter2);
+        
+        private EnigmaOperator enigmaOp = new EnigmaOperator();
+
+        private bool isMute = false;
+
         public MainWindow()
         {
-            InitializeComponent();
-            //==================
-            SetWindowsBinding();
-            SetTooltipBinding();
-            //==================
+            this.InitializeComponent();
+            this.SetWindowsBinding();
+            this.SetTooltipBinding();
         }
-        //==========================================
-        List<Key> availableKeys = new List<Key> { Key.A, Key.B, Key.C, Key.D, Key.E, Key.F, Key.G, Key.H, Key.I, Key.J, Key.K, Key.L, Key.M, Key.N, Key.O, Key.P, Key.Q, Key.R, Key.S, Key.T, Key.U, Key.V, Key.W, Key.X, Key.Y, Key.Z, Key.Back, Key.Space };
-        SoundPlayer typingSound = new SoundPlayer(Properties.Resources.typewriter1);
-        SoundPlayer spacingSound = new SoundPlayer(Properties.Resources.typewriter2);
-        EnigmaOperator enigmaOp = new EnigmaOperator();
-        bool isMute = false;
+
         private void SetWindowsBinding()
         {
             Binding windowBind0 = new Binding("RotorWindows[0]");
@@ -55,6 +56,7 @@ namespace Enigma_WPF
             textBlock_RotorWindow3.SetBinding(TextBlock.TextProperty, windowBind3);
             textBlock_RotorWindow4.SetBinding(TextBlock.TextProperty, windowBind4);
         }
+
         private void SetTooltipBinding()
         {
             Binding bind0 = new Binding("RotorDescriptions[0]");
@@ -67,27 +69,27 @@ namespace Enigma_WPF
             bind3.Source = this.enigmaOp;
             Binding bind4 = new Binding("RotorDescriptions[4]");
             bind4.Source = this.enigmaOp;
-            textBlock_RotorWindow0.SetBinding(TextBlock.ToolTipProperty, bind0);
-            textBlock_RotorWindow1.SetBinding(TextBlock.ToolTipProperty, bind1);
-            textBlock_RotorWindow2.SetBinding(TextBlock.ToolTipProperty, bind2);
-            textBlock_RotorWindow3.SetBinding(TextBlock.ToolTipProperty, bind3);
-            textBlock_RotorWindow4.SetBinding(TextBlock.ToolTipProperty, bind4);
+            this.textBlock_RotorWindow0.SetBinding(TextBlock.ToolTipProperty, bind0);
+            this.textBlock_RotorWindow1.SetBinding(TextBlock.ToolTipProperty, bind1);
+            this.textBlock_RotorWindow2.SetBinding(TextBlock.ToolTipProperty, bind2);
+            this.textBlock_RotorWindow3.SetBinding(TextBlock.ToolTipProperty, bind3);
+            this.textBlock_RotorWindow4.SetBinding(TextBlock.ToolTipProperty, bind4);
             Binding refBind = new Binding("ReflectorName");
             refBind.Source = this.enigmaOp;
-            textBlock_Reflector.SetBinding(TextBlock.ToolTipProperty, refBind);
+            this.textBlock_Reflector.SetBinding(TextBlock.ToolTipProperty, refBind);
         }
 
         private void button_ClearText_Click(object sender, RoutedEventArgs e)
         {
-            textBox_Input.Clear();
-            textBox_Output.Clear();
+            this.textBox_Input.Clear();
+            this.textBox_Output.Clear();
         }
 
         private void button_Reset_Click(object sender, RoutedEventArgs e)
         {
-            enigmaOp.ResetRotorPosition();
-            textBox_Input.Clear();
-            textBox_Output.Clear();
+            this.enigmaOp.ResetRotorPosition();
+            this.textBox_Input.Clear();
+            this.textBox_Output.Clear();
         }
 
         private void button_RotorTurn_Click(object sender, RoutedEventArgs e)
@@ -97,53 +99,76 @@ namespace Enigma_WPF
             TurningDirection direction;
             int rotNum;
             if (tag[0] == 'f')
+            {
                 direction = TurningDirection.Forward;
+            }
             else if (tag[0] == 'r')
+            {
                 direction = TurningDirection.Reverse;
+            }
             else
+            {
                 throw new ArgumentException("Invalid button tag ({0})", turnButton.Name);
+            }
+
             rotNum = int.Parse(tag[1].ToString());
-            enigmaOp.TurnRotor(rotNum, direction);
+            this.enigmaOp.TurnRotor(rotNum, direction);
         }
 
         private void grid_Main_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (!availableKeys.Contains(e.Key)) return;
+            if (!this.availableKeys.Contains(e.Key))
+            {
+                return;
+            }
+
             if (e.Key == Key.Back)
             {
                 int length = textBox_Input.Text.Length;
-                if (length <= 0) return;
-                textBox_Input.Text = textBox_Input.Text.Remove(length - 1);
-                textBox_Output.Text = textBox_Output.Text.Remove(length - 1);
+                if (length <= 0)
+                {
+                    return;
+                }
+
+                this.textBox_Input.Text = textBox_Input.Text.Remove(length - 1);
+                this.textBox_Output.Text = textBox_Output.Text.Remove(length - 1);
             }
             else if (e.Key == Key.Space)
             {
-                if (!isMute) spacingSound.Play();
-                textBox_Input.Text += '_';
-                textBox_Output.Text += '_';
+                if (!this.isMute)
+                {
+                    this.spacingSound.Play();
+                }
+
+                this.textBox_Input.Text += '_';
+                this.textBox_Output.Text += '_';
             }
             else
             {
-                if (!isMute) typingSound.Play();
+                if (!this.isMute)
+                {
+                    this.typingSound.Play();
+                }
+
                 char input = e.Key.ToString()[0];
-                textBox_Input.Text += input;
+                this.textBox_Input.Text += input;
                 char output;
-                enigmaOp.InputChar(input, out output);
-                textBox_Output.Text += output;
+                this.enigmaOp.InputChar(input, out output);
+                this.textBox_Output.Text += output;
             }
         }
 
         private void menuItem_ToggleSound_Click(object sender, RoutedEventArgs e)
         {
             MenuItem soundMenu = (MenuItem)sender;
-            if (isMute)
+            if (this.isMute)
             {
-                isMute = false;
+                this.isMute = false;
                 soundMenu.Header = "Sound: On";
             }
             else
             {
-                isMute = true;
+                this.isMute = true;
                 soundMenu.Header = "Sound: Off";
             }
         }
@@ -153,36 +178,5 @@ namespace Enigma_WPF
             RotorSelectingWindow selectWindow = new RotorSelectingWindow(this.enigmaOp);
             selectWindow.ShowDialog();
         }
-
-        //private void button_Paste_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (!Clipboard.ContainsText()) return;
-        //    textBox_Input.Clear();
-        //    textBox_Output.Clear();
-        //    string input = Clipboard.GetText().ToUpperInvariant();
-        //    string output = string.Empty;
-        //    char outChar;
-        //    foreach (char c in input)
-        //    {
-        //        try
-        //        {
-        //            enigmaOp.InputChar(c, out outChar);
-        //            output += outChar;
-        //        }
-        //        catch
-        //        {
-        //            output += c;
-        //        }
-        //    }
-        //    textBox_Input.Text = input;
-        //    textBox_Output.Text = output;
-        //}
-
-        //private void button_Copy_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Clipboard.SetText(textBox_Output.Text);
-        //}
-
-        //==========================================
     }
 }

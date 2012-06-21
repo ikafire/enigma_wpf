@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-//=========
 using System.Collections.ObjectModel;
-using System.Media;
-//=========
+using System.Linq;
+using System.Windows;
 
 namespace Enigma_WPF
 {
@@ -22,37 +10,58 @@ namespace Enigma_WPF
     /// </summary>
     public partial class RotorSelectingWindow : Window
     {
+        private EnigmaOperator enigmaOp;
+
+        private ObservableCollection<Rotor> unusedRots = new ObservableCollection<Rotor>();
+
+        private ObservableCollection<Rotor> workRots = new ObservableCollection<Rotor>();
+
         public RotorSelectingWindow(EnigmaOperator enigmaOp)
         {
-            InitializeComponent();
-            //============================
+            this.InitializeComponent();
             this.enigmaOp = enigmaOp;
-            unusedRots = new ObservableCollection<Rotor>(enigmaOp.UnusedRotors);
-            workRots = new ObservableCollection<Rotor>(enigmaOp.WorkingRotors);
+            this.unusedRots = new ObservableCollection<Rotor>(this.enigmaOp.UnusedRotors);
+            this.workRots = new ObservableCollection<Rotor>(this.enigmaOp.WorkingRotors);
         }
-        private EnigmaOperator enigmaOp;
-        private ObservableCollection<Rotor> unusedRots = new ObservableCollection<Rotor>();
-        private ObservableCollection<Rotor> workRots = new ObservableCollection<Rotor>();
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            listBox_AllRotors.ItemsSource = unusedRots;
-            listBox_RotorsToWork.ItemsSource = workRots;
+            this.listBox_AllRotors.ItemsSource = this.unusedRots;
+            this.listBox_RotorsToWork.ItemsSource = this.workRots;
         }
 
+        /// <summary>
+        /// Move rotor from unused list to work list
+        /// </summary>
+        /// <param name="sender">The parameter is not used.</param>
+        /// <param name="e">The parameter is not used.</param>
         private void button_AddRotor_Click(object sender, RoutedEventArgs e)
         {
-            if (listBox_AllRotors.SelectedItem == null) return;
-            Rotor selectedRot=(Rotor)listBox_AllRotors.SelectedItem;
-            unusedRots.Remove(selectedRot);
-            workRots.Add(selectedRot);
+            if (listBox_AllRotors.SelectedItem == null)
+            {
+                return;
+            }
+
+            Rotor selectedRot = (Rotor)this.listBox_AllRotors.SelectedItem;
+            this.unusedRots.Remove(selectedRot);
+            this.workRots.Add(selectedRot);
         }
 
+        /// <summary>
+        /// Move rotor from work list to unused list
+        /// </summary>
+        /// <param name="sender">The parameter is not used.</param>
+        /// <param name="e">The parameter is not used.</param>
         private void button_RemoveRotor_Click(object sender, RoutedEventArgs e)
         {
-            if (listBox_RotorsToWork.SelectedItem == null) return;
-            Rotor selectedRot = (Rotor)listBox_RotorsToWork.SelectedItem;
-            workRots.Remove(selectedRot);
-            unusedRots.Add(selectedRot);
+            if (listBox_RotorsToWork.SelectedItem == null)
+            {
+                return;
+            }
+
+            Rotor selectedRot = (Rotor)this.listBox_RotorsToWork.SelectedItem;
+            this.workRots.Remove(selectedRot);
+            this.unusedRots.Add(selectedRot);
         }
 
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
@@ -64,7 +73,7 @@ namespace Enigma_WPF
         {
             try
             {
-                enigmaOp.ChangeRotors(workRots.ToList(), unusedRots.ToList());
+                this.enigmaOp.ChangeRotors(this.workRots.ToList(), this.unusedRots.ToList());
                 this.Close();
             }
             catch (ArgumentOutOfRangeException error)
@@ -76,10 +85,8 @@ namespace Enigma_WPF
 
         private void button_Sort_Click(object sender, RoutedEventArgs e)
         {
-            unusedRots = unusedRots.Sorted();
-            listBox_AllRotors.ItemsSource = unusedRots;
+            this.unusedRots = this.unusedRots.Sorted();
+            this.listBox_AllRotors.ItemsSource = this.unusedRots;
         }
-
-        //================================
     }
 }

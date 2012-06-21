@@ -1,78 +1,88 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Enigma_WPF
 {
+    /// <summary>
+    /// Enigma machine本體，負責協調裡面的零件調用以變異訊號
+    /// </summary>
     public class EnigmaMachine
     {
-        //public EnigmaMachine()
-        //{
-        //    WorkingRotors = new Rotor[5] { Rotor.CreateRotor(PartType.RotorIII), Rotor.CreateRotor(PartType.RotorIV), Rotor.CreateRotor(PartType.RotorII), null, null };
-        //    Reflector = Reflector.UKW_B();
-        //}
         public EnigmaMachine(params Rotor[] rots)
         {
             if (rots.Length > 5)
             {
                 throw new ArgumentOutOfRangeException("more than 5 rotor params when constructing EnigmaMachine");
             }
-            WorkingRotors = new Rotor[5];
+
+            this.WorkingRotors = new Rotor[5];
             for (int i = 0; i < 5; i++)
             {
-                try { WorkingRotors[i] = rots[i]; }
-                catch { WorkingRotors[i] = null; }
+                try
+                {
+                    this.WorkingRotors[i] = rots[i];
+                }
+                catch 
+                {
+                    this.WorkingRotors[i] = null; 
+                }
             }
-            Reflector = Reflector.UKW_B();
+
+            this.Reflector = Reflector.UKW_B();
         }
+
         public Reflector Reflector { get; set; }
+
         public Rotor[] WorkingRotors { get; set; }
-        //public Rotor GetRotor(int rotNum)
-        //{
-        //    return WorkingRotors[rotNum];
-        //}
+
         public void InputSignal(int input, out int output)
         {
-            TurnOver();
-            MutateSignal(input, out output);
+            this.TurnOver();
+            this.MutateSignal(input, out output);
         }
+
         private void TurnOver()
         {
-            if (WorkingRotors.GetRotorCount() >= 3)
+            if (this.WorkingRotors.GetRotorCount() >= 3)
             {
-                if (WorkingRotors[1].isNotch)
+                if (this.WorkingRotors[1].IsNotch)
                 {
-                    WorkingRotors[0].ForwardTurn();
-                    WorkingRotors[1].ForwardTurn();
-                    WorkingRotors[2].ForwardTurn();
+                    this.WorkingRotors[0].ForwardTurn();
+                    this.WorkingRotors[1].ForwardTurn();
+                    this.WorkingRotors[2].ForwardTurn();
                     return;
                 }
             }
-            if (WorkingRotors.GetRotorCount() >= 2)
+
+            if (this.WorkingRotors.GetRotorCount() >= 2)
             {
-                if (WorkingRotors[0].isNotch)
+                if (this.WorkingRotors[0].IsNotch)
                 {
-                    WorkingRotors[0].ForwardTurn();
-                    WorkingRotors[1].ForwardTurn();
+                    this.WorkingRotors[0].ForwardTurn();
+                    this.WorkingRotors[1].ForwardTurn();
                     return;
                 }
             }
-            WorkingRotors[0].ForwardTurn();
+
+            this.WorkingRotors[0].ForwardTurn();
         }
+
         private void MutateSignal(int input, out int output)
         {
             int signal = input;
-            WorkingRotors.ForEach(rot =>
+            this.WorkingRotors.ForEach(rot =>
                 {
                     if (rot != null)
+                    {
                         rot.ForwardInput(signal, out signal);
+                    }
                 });
             Reflector.Input(signal, out signal);
-            WorkingRotors.ReverseForEach(rot =>
+            this.WorkingRotors.ReverseForEach(rot =>
                 {
-                    if (rot != null) 
+                    if (rot != null)
+                    {
                         rot.ReverseInput(signal, out signal);
+                    }
                 });
             output = signal;
         }
