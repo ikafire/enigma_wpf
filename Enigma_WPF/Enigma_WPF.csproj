@@ -8,7 +8,7 @@
     <ProjectGuid>{102DCFA1-FFD7-46B9-8AC4-2DAE6CACDEFB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Enigma_WPF</RootNamespace>
+    <RootNamespace>EnigmaWPF</RootNamespace>
     <AssemblyName>Enigma_WPF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -55,15 +55,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ElectricalPart.cs" />
-    <Compile Include="EnigmaOperator.cs" />
+    <Compile Include="Model\EnigmaOperator.cs" />
+    <Compile Include="Model\EnigmaPartInfo.cs" />
+    <Compile Include="Model\Reflectors\OfficialReflectors.cs" />
+    <Compile Include="Model\Reflectors\Reflector.cs" />
+    <Compile Include="Model\RotorSet.cs" />
+    <Compile Include="Model\Rotors\CustomRotor.cs" />
+    <Compile Include="Model\Rotors\Rotor.cs" />
+    <Compile Include="Model\Rotors\OfficialRotors.cs" />
     <Compile Include="RotorSelectingWindow.xaml.cs">
       <DependentUpon>RotorSelectingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PublicEnums.cs" />
-    <Compile Include="Reflector.cs" />
-    <Compile Include="Rotor.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="Model\PublicEnums.cs" />
+    <Compile Include="Model\Util.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,7 +76,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EnigmaMachine.cs" />
+    <Compile Include="Model\EnigmaMachine.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

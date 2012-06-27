@@ -2,8 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using EnigmaWPF.Model;
 
-namespace Enigma_WPF
+namespace EnigmaWPF
 {
     /// <summary>
     /// PartSelectingWindow.xaml 的互動邏輯
@@ -12,7 +13,7 @@ namespace Enigma_WPF
     {
         private EnigmaOperator enigmaOp;
 
-        private ObservableCollection<Rotor> unusedRots = new ObservableCollection<Rotor>();
+        private ObservableCollection<Rotor> allRots = new ObservableCollection<Rotor>();
 
         private ObservableCollection<Rotor> workRots = new ObservableCollection<Rotor>();
 
@@ -20,21 +21,16 @@ namespace Enigma_WPF
         {
             this.InitializeComponent();
             this.enigmaOp = enigmaOp;
-            this.unusedRots = new ObservableCollection<Rotor>(this.enigmaOp.UnusedRotors);
+            this.allRots = new ObservableCollection<Rotor>(this.enigmaOp.AllRotors);
             this.workRots = new ObservableCollection<Rotor>(this.enigmaOp.WorkingRotors);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.listBox_AllRotors.ItemsSource = this.unusedRots;
-            this.listBox_RotorsToWork.ItemsSource = this.workRots;
+            this.listBox_AllRotors.ItemsSource = this.allRots;
+            this.listBox_WorkRotors.ItemsSource = this.workRots;
         }
 
-        /// <summary>
-        /// Move rotor from unused list to work list.
-        /// </summary>
-        /// <param name="sender">The parameter is not used.</param>
-        /// <param name="e">The parameter is not used.</param>
         private void button_AddRotor_Click(object sender, RoutedEventArgs e)
         {
             if (listBox_AllRotors.SelectedItem == null)
@@ -42,26 +38,29 @@ namespace Enigma_WPF
                 return;
             }
 
-            Rotor selectedRot = (Rotor)this.listBox_AllRotors.SelectedItem;
-            this.unusedRots.Remove(selectedRot);
-            this.workRots.Add(selectedRot);
-        }
-
-        /// <summary>
-        /// Move rotor from work list to unused list.
-        /// </summary>
-        /// <param name="sender">The parameter is not used.</param>
-        /// <param name="e">The parameter is not used.</param>
-        private void button_RemoveRotor_Click(object sender, RoutedEventArgs e)
-        {
-            if (listBox_RotorsToWork.SelectedItem == null)
+            if (this.workRots.Count >= 5)
             {
                 return;
             }
 
-            Rotor selectedRot = (Rotor)this.listBox_RotorsToWork.SelectedItem;
+            Rotor selectedRot = (Rotor)this.listBox_AllRotors.SelectedItem;
+            if (this.workRots.Contains(selectedRot))
+            {
+                return;
+            }
+
+            this.workRots.Add(selectedRot);
+        }
+
+        private void button_RemoveRotor_Click(object sender, RoutedEventArgs e)
+        {
+            if (listBox_WorkRotors.SelectedItem == null)
+            {
+                return;
+            }
+
+            Rotor selectedRot = (Rotor)this.listBox_WorkRotors.SelectedItem;
             this.workRots.Remove(selectedRot);
-            this.unusedRots.Add(selectedRot);
         }
 
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
@@ -71,22 +70,15 @@ namespace Enigma_WPF
 
         private void button_Confirm_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                this.enigmaOp.ChangeRotors(this.workRots.ToList(), this.unusedRots.ToList());
-                this.Close();
-            }
-            catch (ArgumentOutOfRangeException error)
+            if (this.workRots.Count <= 0)
             {
                 Util.Ding();
-                MessageBox.Show(error.Message);
+                MessageBox.Show("There must be at least one rotor to work.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
             }
-        }
 
-        private void button_Sort_Click(object sender, RoutedEventArgs e)
-        {
-            this.unusedRots = this.unusedRots.Sorted();
-            this.listBox_AllRotors.ItemsSource = this.unusedRots;
+            this.enigmaOp.ChangeRotors(this.workRots.ToList());
+            this.Close();
         }
     }
 }

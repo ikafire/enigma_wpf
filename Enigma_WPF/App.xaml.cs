@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Enigma_WPF
+namespace EnigmaWPF
 {
     /// <summary>
     /// App.xaml 的互動邏輯

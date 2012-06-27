@@ -5,8 +5,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using EnigmaWPF.Model;
 
-namespace Enigma_WPF
+namespace EnigmaWPF
 {
     /// <summary>
     /// MainWindow.xaml 的互動邏輯
@@ -48,43 +49,67 @@ namespace Enigma_WPF
 
         private void SetWindowsBinding()
         {
-            Binding windowBind0 = new Binding("RotorWindows[0]");
-            windowBind0.Source = this.enigmaOp;
-            Binding windowBind1 = new Binding("RotorWindows[1]");
-            windowBind1.Source = this.enigmaOp;
-            Binding windowBind2 = new Binding("RotorWindows[2]");
-            windowBind2.Source = this.enigmaOp;
-            Binding windowBind3 = new Binding("RotorWindows[3]");
-            windowBind3.Source = this.enigmaOp;
-            Binding windowBind4 = new Binding("RotorWindows[4]");
-            windowBind4.Source = this.enigmaOp;
-            textBlock_RotorWindow0.SetBinding(TextBlock.TextProperty, windowBind0);
-            textBlock_RotorWindow1.SetBinding(TextBlock.TextProperty, windowBind1);
-            textBlock_RotorWindow2.SetBinding(TextBlock.TextProperty, windowBind2);
-            textBlock_RotorWindow3.SetBinding(TextBlock.TextProperty, windowBind3);
-            textBlock_RotorWindow4.SetBinding(TextBlock.TextProperty, windowBind4);
+            Binding bind;
+            bind = new Binding("RotorWindows[0]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow0.SetBinding(TextBlock.TextProperty, bind);
+            bind = new Binding("RotorWindows[1]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow1.SetBinding(TextBlock.TextProperty, bind);
+            bind = new Binding("RotorWindows[2]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow2.SetBinding(TextBlock.TextProperty, bind);
+            bind = new Binding("RotorWindows[3]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow3.SetBinding(TextBlock.TextProperty, bind);
+            bind = new Binding("RotorWindows[4]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow4.SetBinding(TextBlock.TextProperty, bind);
         }
 
         private void SetTooltipBinding()
         {
-            Binding bind0 = new Binding("RotorDescriptions[0]");
-            bind0.Source = this.enigmaOp;
-            Binding bind1 = new Binding("RotorDescriptions[1]");
-            bind1.Source = this.enigmaOp;
-            Binding bind2 = new Binding("RotorDescriptions[2]");
-            bind2.Source = this.enigmaOp;
-            Binding bind3 = new Binding("RotorDescriptions[3]");
-            bind3.Source = this.enigmaOp;
-            Binding bind4 = new Binding("RotorDescriptions[4]");
-            bind4.Source = this.enigmaOp;
-            this.textBlock_RotorWindow0.SetBinding(TextBlock.ToolTipProperty, bind0);
-            this.textBlock_RotorWindow1.SetBinding(TextBlock.ToolTipProperty, bind1);
-            this.textBlock_RotorWindow2.SetBinding(TextBlock.ToolTipProperty, bind2);
-            this.textBlock_RotorWindow3.SetBinding(TextBlock.ToolTipProperty, bind3);
-            this.textBlock_RotorWindow4.SetBinding(TextBlock.ToolTipProperty, bind4);
-            Binding refBind = new Binding("ReflectorName");
-            refBind.Source = this.enigmaOp;
-            this.textBlock_Reflector.SetBinding(TextBlock.ToolTipProperty, refBind);
+            Binding bind;
+            bind = new Binding("RotorDescriptions[0]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow0.SetBinding(TextBlock.ToolTipProperty, bind);
+            bind = new Binding("RotorDescriptions[1]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow1.SetBinding(TextBlock.ToolTipProperty, bind);
+            bind = new Binding("RotorDescriptions[2]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow2.SetBinding(TextBlock.ToolTipProperty, bind);
+            bind = new Binding("RotorDescriptions[3]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow3.SetBinding(TextBlock.ToolTipProperty, bind);
+            bind = new Binding("RotorDescriptions[4]")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_RotorWindow4.SetBinding(TextBlock.ToolTipProperty, bind);
+            bind = new Binding("ReflectorName")
+            {
+                Source = this.enigmaOp.PartInfo
+            };
+            this.textBlock_Reflector.SetBinding(TextBlock.ToolTipProperty, bind);
         }
 
         private void button_ClearText_Click(object sender, RoutedEventArgs e)
