@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using EnigmaWPF.Model;
+using System.ComponentModel;
+using Microsoft.Win32;
 
 namespace EnigmaWPF
 {
@@ -245,6 +247,73 @@ namespace EnigmaWPF
             string output;
             this.enigmaOp.InputString(input, out output);
             this.textBox_Output.Text = output;
+        }
+
+        private void menuItem_Export_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveDlg = new SaveFileDialog
+            {
+                Title = "Export Parts",
+                Filter = "dat File (*.dat)|*.dat",
+                ValidateNames = true,
+                FileName = string.Format("ExpParts{0}.dat", DateTime.Now.ToString("ddMMyyyy"))
+            };
+            saveDlg.FileOk += this.WriteRotors;
+            saveDlg.ShowDialog();
+        }
+
+        private void WriteRotors(object saveDialog, CancelEventArgs e)
+        {
+            SaveFileDialog saveDlg = (SaveFileDialog)saveDialog;
+            if (saveDlg.FileName != "")
+            {
+                PartCollection parts = new PartCollection
+                {
+                    PlugBoard = this.enigmaOp.PlugBoard,
+                    Rotors = this.enigmaOp.WorkingRotors,
+                    Reflector = this.enigmaOp.WorkingReflector
+                };
+                PartWriter writer = new PartWriter(parts);
+                try
+                {
+                    writer.WriteTo(saveDlg.FileName);
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void menuItem_Import_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openDlg = new OpenFileDialog
+            {
+                Title="Import Parts",
+                Filter = "dat File (*.dat)|*.dat|All File|*.*",
+                ValidateNames = true,
+            };
+            openDlg.FileOk += this.ReadRotors;
+            openDlg.ShowDialog();
+        }
+
+        private void ReadRotors(object openDialog, CancelEventArgs e)
+        {
+            OpenFileDialog openDlg = (OpenFileDialog)openDialog;
+            PartCollection parts;
+            if (openDlg.FileName != "")
+            {
+                PartReader reader = new PartReader();
+                try
+                {
+                    parts = reader.ReadFromFile(openDlg.FileName);
+                    this.enigmaOp.ImportParts(parts);
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message, "File not found or corrupted", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

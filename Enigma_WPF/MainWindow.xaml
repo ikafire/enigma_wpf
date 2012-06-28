@@ -41,6 +41,10 @@
         <Menu Height="23" Name="menu_MainMenu" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto">
             <MenuItem Header="Enigma">
                 <MenuItem Name="menuItem_SelectRotor" Header="Select Rotors" Click="menuItem_SelectRotor_Click"/>
+                <MenuItem Name ="menuItem_IO" Header="Import/Export">
+                    <MenuItem Name="menuItem_Export" Header="Export parts" Click="menuItem_Export_Click"/>
+                    <MenuItem Name="menuItem_Import" Header="Import parts" Click="menuItem_Import_Click"/>
+                </MenuItem>
                 <MenuItem Name="menuItem_ToggleEncryptMode" Header="Encrypt Mode: Traditional" Click="menuItem_ToggleEncryptMode_Click"/>
                 <MenuItem Name="menuItem_ToggleSound" Header="Sound: On" Click="menuItem_ToggleSound_Click"/>
             </MenuItem>

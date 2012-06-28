@@ -57,17 +57,21 @@
     </ApplicationDefinition>
     <Compile Include="Model\EnigmaOperator.cs" />
     <Compile Include="Model\EnigmaPartInfo.cs" />
+    <Compile Include="Model\PartCollection.cs" />
+    <Compile Include="Model\PlugBoard.cs" />
     <Compile Include="Model\Reflectors\OfficialReflectors.cs" />
     <Compile Include="Model\Reflectors\Reflector.cs" />
     <Compile Include="Model\RotorSet.cs" />
     <Compile Include="Model\Rotors\CustomRotor.cs" />
     <Compile Include="Model\Rotors\Rotor.cs" />
     <Compile Include="Model\Rotors\OfficialRotors.cs" />
+    <Compile Include="PartReader.cs" />
     <Compile Include="RotorSelectingWindow.xaml.cs">
       <DependentUpon>RotorSelectingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\PublicEnums.cs" />
     <Compile Include="Model\Util.cs" />
+    <Compile Include="PartWriter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

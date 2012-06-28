@@ -6,7 +6,8 @@ namespace EnigmaWPF.Model
     /// <summary>
     /// 所有Rotor的父類別
     /// </summary>
-    public abstract class Rotor
+    [Serializable]
+    public class Rotor
     {
         protected Rotor()
         {
@@ -14,11 +15,20 @@ namespace EnigmaWPF.Model
             this.RingPosition = 0;
         }
 
+        public Rotor(Rotor rot)
+        {
+            this.CurrentPosition = rot.CurrentPosition;
+            this.Name = rot.Name;
+            this.Notches = rot.Notches;
+            this.RingPosition = rot.RingPosition;
+            this.Wiring = rot.Wiring;
+        }
+
         public int CurrentPosition { get; private set; }
 
         public int RingPosition { get; set; }
 
-        public virtual string Name { get; protected set; }
+        public virtual string Name { get; set; }
 
         public virtual int[] Wiring { get; protected set; }
 

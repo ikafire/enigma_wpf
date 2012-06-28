@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace EnigmaWPF.Model
 {
@@ -86,6 +87,14 @@ namespace EnigmaWPF.Model
         public List<Rotor> ToList()
         {
             return new List<Rotor>(this.rotSet);
+        }
+
+        public void ForEach(Action<Rotor> action)
+        {
+            foreach (Rotor rot in this.rotSet)
+            {
+                action(rot);
+            }
         }
     }
 }

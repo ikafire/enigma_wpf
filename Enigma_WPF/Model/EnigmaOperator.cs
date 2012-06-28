@@ -27,7 +27,8 @@ namespace EnigmaWPF.Model
             this.machine = new EnigmaMachine
             {
                 Rotors = new RotorSet(this.AllRotors[0], this.AllRotors[1], this.AllRotors[2]),
-                Reflector = this.AllReflectors[0]
+                Reflector = this.AllReflectors[0],
+                PlugBoard = new PlugBoard()
             };
 
             this.PartInfo = new EnigmaPartInfo(this.machine);
@@ -47,6 +48,11 @@ namespace EnigmaWPF.Model
         public Reflector WorkingReflector
         {
             get { return this.machine.Reflector; }
+        }
+
+        public PlugBoard PlugBoard
+        {
+            get { return this.machine.PlugBoard; }
         }
 
         public void InputChar(char input, out char output)
@@ -112,6 +118,22 @@ namespace EnigmaWPF.Model
         {
             this.machine.Reflector = newRef;
             this.PartInfo.UpdatePartInfo();
+        }
+
+        public void AddCustomRotor(CustomRotor rotor)
+        {
+            this.AllRotors.Add(rotor);
+        }
+
+        public void ImportParts(PartCollection parts)
+        {
+            this.machine.PlugBoard = parts.PlugBoard;
+            this.machine.Reflector = parts.Reflector;
+            this.machine.Rotors = new RotorSet(parts.Rotors);
+            this.AllReflectors.Add(parts.Reflector);
+            this.AllRotors.AddRange(parts.Rotors);
+            this.PartInfo.UpdatePartInfo();
+            this.PartInfo.UpdateRotorWindows();
         }
     }
 }
