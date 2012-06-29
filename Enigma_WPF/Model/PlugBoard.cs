@@ -8,21 +8,62 @@ namespace EnigmaWPF.Model
     [Serializable]
     public class PlugBoard
     {
-        public int[] Wiring { get; private set; }
+        private List<Plug> plugs;
 
         public PlugBoard()
         {
-            this.Wiring = new int[26] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
+            this.plugs = new List<Plug>();
         }
 
-        public void ForwardInputSignal(int input, out int output)
+        public List<Plug> Plugs
         {
-            output = this.Wiring[input];
+            get { return this.plugs; }
         }
 
-        public void ReverseInputSignal(int input, out int output)
+        public void MutateSignal(int input, out int output)
         {
-            output = Array.FindIndex(this.Wiring, i => i == input);
+            output = input;
+            foreach (var plug in plugs)
+            {
+                if (plug.Contains(input))
+                {
+                    output = plug.Mutate(input);
+                }
+            }
+        }
+
+        public bool Plug(int index1, int index2)
+        {
+            if (this.IsPlugged(index1, index2))
+            {
+                return false;
+            }
+
+            this.plugs.Add(new Plug(index1, index2));
+            return true;
+        }
+
+        public bool UnPlug(int index1, int index2)
+        {
+            return this.plugs.Remove(new Plug(index1, index2));
+        }
+
+        public void UnPlugAll()
+        {
+            this.plugs = new List<Plug>();
+        }
+
+        private bool IsPlugged(int index1, int index2)
+        {
+            foreach (var plug in plugs)
+            {
+                if (plug.Contains(index1) || plug.Contains(index2))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

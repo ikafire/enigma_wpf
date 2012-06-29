@@ -36,6 +36,8 @@ namespace EnigmaWPF
 
         private EncryptMode encryptMode = EncryptMode.PerChar;
 
+        private PlugBoardWindow pbWindow;
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -313,6 +315,22 @@ namespace EnigmaWPF
                 {
                     MessageBox.Show(error.Message, "File not found or corrupted", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void button_OpenPlugBoardWindow_Click(object sender, RoutedEventArgs e)
+        {
+            switch (PlugBoardWindow.IsOpened)
+            {
+                case true:
+                    this.pbWindow.Close();
+                    this.button_OpenPlugBoardWindow.Content = ">>";
+                    break;
+                case false:
+                    this.pbWindow = new PlugBoardWindow(this.enigmaOp.PlugBoard);
+                    this.pbWindow.Show();
+                    this.button_OpenPlugBoardWindow.Content = "<<";
+                    break;
             }
         }
     }

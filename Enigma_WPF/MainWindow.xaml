@@ -4,7 +4,7 @@
         Title="Enigma Machine Simulator" Height="395" Width="517" MinHeight="320" VerticalAlignment="Stretch" Name="window_Main" MinWidth="380">
     <Grid Name="grid_Main" PreviewKeyDown="grid_Main_PreviewKeyDown">
         <StackPanel Height="130" Margin="12,35,12,0" Name="stackPanel_RotorWindow" VerticalAlignment="Top">
-            <Grid Height="130" Name="grid_RotorWindow" Width="326">
+            <Grid Height="130" Name="grid_RotorWindow" Width="393">
                 <TextBlock Height="23" HorizontalAlignment="Left" Margin="18,98,0,0" Name="textBlock_Reflector" Text="Reflector" VerticalAlignment="Top" FontSize="16">
                 <TextBlock.RenderTransform>
                     <RotateTransform Angle="-90"/>
@@ -25,6 +25,11 @@
                 <TextBlock FontSize="32" Height="Auto" HorizontalAlignment="Left" Margin="56,44,0,0" Name="textBlock_RotorWindow4" Text="A" TextAlignment="Center" VerticalAlignment="Top" Width="34" />
                 <Button Content="↑" Height="23" HorizontalAlignment="Left" Margin="62,15,0,0" Name="button_RotorForwardTurn4" Tag="f4" ToolTip="Rotate this rotor" VerticalAlignment="Top" Width="22" Click="button_RotorTurn_Click"/>
                 <Button Content="↓" Height="23" HorizontalAlignment="Left" Margin="62,93,0,0" Name="button_RotorReverseTurn4" Tag="r4" ToolTip="Rotate this rotor" VerticalAlignment="Top" Width="22" Click="button_RotorTurn_Click"/>
+                <Canvas Height="40" HorizontalAlignment="Left" Margin="322,47,0,0" Name="canvas1" VerticalAlignment="Top" Width="78">
+                    <Polygon Points="0,20 20,0 20,40" Fill="Red" Opacity="0.3"/>
+                    <Rectangle Canvas.Left="20" Canvas.Top="10" Height="20" Width="54" Fill="Red" Opacity="0.3"/>
+                    <TextBlock Canvas.Left="8" Canvas.Top="10" Height="23" Name="textBlock1" Text="Signal Input" />
+                </Canvas>
             </Grid>
         </StackPanel>
         <Grid Margin="12,171,12,51" Name="grid_InputPanel" MinHeight="64">
@@ -45,10 +50,12 @@
                     <MenuItem Name="menuItem_Export" Header="Export parts" Click="menuItem_Export_Click"/>
                     <MenuItem Name="menuItem_Import" Header="Import parts" Click="menuItem_Import_Click"/>
                 </MenuItem>
+                <Separator />
                 <MenuItem Name="menuItem_ToggleEncryptMode" Header="Encrypt Mode: Traditional" Click="menuItem_ToggleEncryptMode_Click"/>
                 <MenuItem Name="menuItem_ToggleSound" Header="Sound: On" Click="menuItem_ToggleSound_Click"/>
             </MenuItem>
         </Menu>
         <Button Content="Encrypt" Height="23" HorizontalAlignment="Left" Margin="12,321,0,0" Name="button_Encrypt" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="button_Encrypt_Click" />
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,6,11,0" Name="button_OpenPlugBoardWindow" VerticalAlignment="Top" Width="34" ToolTip="Open  plug board window" Click="button_OpenPlugBoardWindow_Click">&gt;&gt;</Button>
     </Grid>
 </Window>

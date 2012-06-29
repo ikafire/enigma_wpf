@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,23 +56,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExpansionMethods.cs" />
     <Compile Include="Model\EnigmaOperator.cs" />
     <Compile Include="Model\EnigmaPartInfo.cs" />
+    <Compile Include="Model\IPart.cs" />
     <Compile Include="Model\PartCollection.cs" />
-    <Compile Include="Model\PlugBoard.cs" />
+    <Compile Include="Model\Plug.cs" />
     <Compile Include="Model\Reflectors\OfficialReflectors.cs" />
     <Compile Include="Model\Reflectors\Reflector.cs" />
     <Compile Include="Model\RotorSet.cs" />
     <Compile Include="Model\Rotors\CustomRotor.cs" />
     <Compile Include="Model\Rotors\Rotor.cs" />
     <Compile Include="Model\Rotors\OfficialRotors.cs" />
+    <Compile Include="PartDialogWindow.xaml.cs">
+      <DependentUpon>PartDialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PartReader.cs" />
+    <Compile Include="Model\PlugBoard.cs" />
+    <Compile Include="PlugBoardWindow.xaml.cs">
+      <DependentUpon>PlugBoardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlugButton.xaml.cs">
+      <DependentUpon>PlugButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RotorSelectingWindow.xaml.cs">
       <DependentUpon>RotorSelectingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\PublicEnums.cs" />
     <Compile Include="Model\Util.cs" />
     <Compile Include="PartWriter.cs" />
+    <Compile Include="WiringDiagram.xaml.cs">
+      <DependentUpon>WiringDiagram.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,9 +101,25 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PartDialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlugBoardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlugButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="RotorSelectingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WiringDiagram.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -129,5 +129,20 @@ namespace EnigmaWPF
             }
         }
 
+        private void button_ShowRotorWiring_Click(object sender, RoutedEventArgs e)
+        {
+            IPart source = (IPart)this.listBox_AllRotors.SelectedItem;
+            PartDialogWindow pdWindow = new PartDialogWindow(source);
+            pdWindow.IsReadOnly = true;
+            pdWindow.ShowDialog();
+        }
+
+        private void button_ShowReflectorWiring_Click(object sender, RoutedEventArgs e)
+        {
+            IPart source = (IPart)this.listBox_AllReflectors.SelectedItem;
+            PartDialogWindow pdWindow = new PartDialogWindow(source);
+            pdWindow.IsReadOnly = true;
+            pdWindow.ShowDialog();
+        }
     }
 }

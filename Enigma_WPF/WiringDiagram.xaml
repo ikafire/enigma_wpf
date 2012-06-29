@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="EnigmaWPF.WiringDiagram"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="645" Width="210">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="typerStyle">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Courier New"/>
+        </Style>
+        <Style TargetType="Ellipse" x:Key="rightEllipse">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Fill" Value="SkyBlue"/>
+            <Setter Property="Canvas.Left" Value="150"/>
+            <EventSetter Event="MouseDown" Handler="ellipse_Right_MouseDown"/>
+            <EventSetter Event="MouseEnter" Handler="ellipse_Right_MouseEnter"/>
+            <EventSetter Event="MouseLeave" Handler="ellipse_Right_MouseLeave"/>
+        </Style>
+        <Style TargetType="Ellipse" x:Key="leftEllipse">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Fill" Value="SkyBlue"/>
+            <Setter Property="Canvas.Left" Value="0"/>
+            <EventSetter Event="MouseDown" Handler="ellipse_Left_MouseDown"/>
+            <EventSetter Event="MouseEnter" Handler="ellipse_Left_MouseEnter"/>
+            <EventSetter Event="MouseLeave" Handler="ellipse_Left_MouseLeave"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Canvas Name="canvas_Main" Margin="0" Width="170" Height="645" Opacity="0.6">
+            <Ellipse Name="ellipse_Left0" Style="{StaticResource leftEllipse}" Canvas.Top="0"/>
+            <Ellipse Name="ellipse_Left1" Style="{StaticResource leftEllipse}" Canvas.Top="25"/>
+            <Ellipse Name="ellipse_Left2" Style="{StaticResource leftEllipse}" Canvas.Top="50"/>
+            <Ellipse Name="ellipse_Left3" Style="{StaticResource leftEllipse}" Canvas.Top="75"/>
+            <Ellipse Name="ellipse_Left4" Style="{StaticResource leftEllipse}" Canvas.Top="100"/>
+            <Ellipse Name="ellipse_Left5" Style="{StaticResource leftEllipse}" Canvas.Top="125"/>
+            <Ellipse Name="ellipse_Left6" Style="{StaticResource leftEllipse}" Canvas.Top="150"/>
+            <Ellipse Name="ellipse_Left7" Style="{StaticResource leftEllipse}" Canvas.Top="175"/>
+            <Ellipse Name="ellipse_Left8" Style="{StaticResource leftEllipse}" Canvas.Top="200"/>
+            <Ellipse Name="ellipse_Left9" Style="{StaticResource leftEllipse}" Canvas.Top="225"/>
+            <Ellipse Name="ellipse_Left10" Style="{StaticResource leftEllipse}" Canvas.Top="250"/>
+            <Ellipse Name="ellipse_Left11" Style="{StaticResource leftEllipse}" Canvas.Top="275"/>
+            <Ellipse Name="ellipse_Left12" Style="{StaticResource leftEllipse}" Canvas.Top="300"/>
+            <Ellipse Name="ellipse_Left13" Style="{StaticResource leftEllipse}" Canvas.Top="325"/>
+            <Ellipse Name="ellipse_Left14" Style="{StaticResource leftEllipse}" Canvas.Top="350"/>
+            <Ellipse Name="ellipse_Left15" Style="{StaticResource leftEllipse}" Canvas.Top="375"/>
+            <Ellipse Name="ellipse_Left16" Style="{StaticResource leftEllipse}" Canvas.Top="400"/>
+            <Ellipse Name="ellipse_Left17" Style="{StaticResource leftEllipse}" Canvas.Top="425"/>
+            <Ellipse Name="ellipse_Left18" Style="{StaticResource leftEllipse}" Canvas.Top="450"/>
+            <Ellipse Name="ellipse_Left19" Style="{StaticResource leftEllipse}" Canvas.Top="475"/>
+            <Ellipse Name="ellipse_Left20" Style="{StaticResource leftEllipse}" Canvas.Top="500"/>
+            <Ellipse Name="ellipse_Left21" Style="{StaticResource leftEllipse}" Canvas.Top="525"/>
+            <Ellipse Name="ellipse_Left22" Style="{StaticResource leftEllipse}" Canvas.Top="550"/>
+            <Ellipse Name="ellipse_Left23" Style="{StaticResource leftEllipse}" Canvas.Top="575"/>
+            <Ellipse Name="ellipse_Left24" Style="{StaticResource leftEllipse}" Canvas.Top="600"/>
+            <Ellipse Name="ellipse_Left25" Style="{StaticResource leftEllipse}" Canvas.Top="625"/>
+            <Ellipse Name="ellipse_Right0" Style="{StaticResource rightEllipse}" Canvas.Top="0"/>
+            <Ellipse Name="ellipse_Right1" Style="{StaticResource rightEllipse}" Canvas.Top="25"/>
+            <Ellipse Name="ellipse_Right2" Style="{StaticResource rightEllipse}" Canvas.Top="50"/>
+            <Ellipse Name="ellipse_Right3" Style="{StaticResource rightEllipse}" Canvas.Top="75"/>
+            <Ellipse Name="ellipse_Right4" Style="{StaticResource rightEllipse}" Canvas.Top="100"/>
+            <Ellipse Name="ellipse_Right5" Style="{StaticResource rightEllipse}" Canvas.Top="125"/>
+            <Ellipse Name="ellipse_Right6" Style="{StaticResource rightEllipse}" Canvas.Top="150"/>
+            <Ellipse Name="ellipse_Right7" Style="{StaticResource rightEllipse}" Canvas.Top="175"/>
+            <Ellipse Name="ellipse_Right8" Style="{StaticResource rightEllipse}" Canvas.Top="200"/>
+            <Ellipse Name="ellipse_Right9" Style="{StaticResource rightEllipse}" Canvas.Top="225"/>
+            <Ellipse Name="ellipse_Right10" Style="{StaticResource rightEllipse}" Canvas.Top="250"/>
+            <Ellipse Name="ellipse_Right11" Style="{StaticResource rightEllipse}" Canvas.Top="275"/>
+            <Ellipse Name="ellipse_Right12" Style="{StaticResource rightEllipse}" Canvas.Top="300"/>
+            <Ellipse Name="ellipse_Right13" Style="{StaticResource rightEllipse}" Canvas.Top="325"/>
+            <Ellipse Name="ellipse_Right14" Style="{StaticResource rightEllipse}" Canvas.Top="350"/>
+            <Ellipse Name="ellipse_Right15" Style="{StaticResource rightEllipse}" Canvas.Top="375"/>
+            <Ellipse Name="ellipse_Right16" Style="{StaticResource rightEllipse}" Canvas.Top="400"/>
+            <Ellipse Name="ellipse_Right17" Style="{StaticResource rightEllipse}" Canvas.Top="425"/>
+            <Ellipse Name="ellipse_Right18" Style="{StaticResource rightEllipse}" Canvas.Top="450"/>
+            <Ellipse Name="ellipse_Right19" Style="{StaticResource rightEllipse}" Canvas.Top="475"/>
+            <Ellipse Name="ellipse_Right20" Style="{StaticResource rightEllipse}" Canvas.Top="500"/>
+            <Ellipse Name="ellipse_Right21" Style="{StaticResource rightEllipse}" Canvas.Top="525"/>
+            <Ellipse Name="ellipse_Right22" Style="{StaticResource rightEllipse}" Canvas.Top="550"/>
+            <Ellipse Name="ellipse_Right23" Style="{StaticResource rightEllipse}" Canvas.Top="575"/>
+            <Ellipse Name="ellipse_Right24" Style="{StaticResource rightEllipse}" Canvas.Top="600"/>
+            <Ellipse Name="ellipse_Right25" Style="{StaticResource rightEllipse}" Canvas.Top="625"/>
+        </Canvas>
+        <StackPanel HorizontalAlignment="Left" Width="20">
+            <TextBlock Text="A" Style="{StaticResource typerStyle}" />
+            <TextBlock Text="B" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="C" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="D" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="E" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="F" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="G" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="H" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="I" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="J" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="K" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="L" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="M" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="N" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="O" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="P" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="Q" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="R" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="S" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="T" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="U" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="V" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="W" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="X" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="Y" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="Z" Style="{StaticResource typerStyle}"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Width="20">
+            <TextBlock Text="A" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="B" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="C" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="D" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="E" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="F" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="G" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="H" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="I" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="J" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="K" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="L" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="M" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="N" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="O" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="P" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="Q" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="R" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="S" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="T" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="U" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="V" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="W" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="X" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="Y" Style="{StaticResource typerStyle}"/>
+            <TextBlock Text="Z" Style="{StaticResource typerStyle}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

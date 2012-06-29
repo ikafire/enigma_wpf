@@ -7,7 +7,7 @@ namespace EnigmaWPF.Model
     /// 所有Rotor的父類別
     /// </summary>
     [Serializable]
-    public class Rotor
+    public class Rotor : IPart
     {
         protected Rotor()
         {

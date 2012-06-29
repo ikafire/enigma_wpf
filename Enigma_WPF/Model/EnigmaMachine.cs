@@ -15,11 +15,11 @@
         {
             int signal = input;
             this.Rotors.TurnOver();
-            this.PlugBoard.ForwardInputSignal(signal, out signal);
+            this.PlugBoard.MutateSignal(signal, out signal);
             this.Rotors.ForwardInputSignal(signal, out signal);
             this.Reflector.InputSignal(signal, out signal);
             this.Rotors.ReverseInputSignal(signal, out signal);
-            this.PlugBoard.ReverseInputSignal(signal, out signal);
+            this.PlugBoard.MutateSignal(signal, out signal);
             output = signal;
         }
     }

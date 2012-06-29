@@ -1,0 +1,35 @@
+﻿<Window x:Class="EnigmaWPF.PlugBoardWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:EnigmaWPF"
+    Title="PlugBoardWindow" Height="410" Width="390" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid>
+        <control:PlugButton x:Name="plugButton_A" Lable="A" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="20" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_B" Lable="B" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="70,20" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_C" Lable="C" HorizontalAlignment="Left" Width="30" Margin="120,20" Height="60" VerticalAlignment="Top" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_D" Lable="D" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="170,20" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_E" Lable="E" Height="60" VerticalAlignment="Top" Margin="220,20,0,0" Click="PlugButton_Click" HorizontalAlignment="Left" Width="30"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_F" Lable="F" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="270,20,0,0" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_G" Lable="G" HorizontalAlignment="Left" Width="30" Margin="320,20,0,0" Height="60" VerticalAlignment="Top" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_H" Lable="H" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Click="PlugButton_Click" Margin="45,100"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_I" Lable="I" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="95,100" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_J" Lable="J" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="145,100" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_K" Lable="K" Margin="195,100,0,0" Height="60" VerticalAlignment="Top" Click="PlugButton_Click" HorizontalAlignment="Left" Width="30"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_L" Lable="L" HorizontalAlignment="Left" Width="30" Margin="245,100,0,0" Height="60" VerticalAlignment="Top" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_M" Lable="M" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="295,100,0,0" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_N" Lable="N" HorizontalAlignment="Left" Width="30" Margin="20,180,0,0" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_O" Lable="O" Margin="70,180,0,0" HorizontalAlignment="Left" Width="30" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_P" Lable="P" HorizontalAlignment="Left" Width="30" Margin="120,180,0,0" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_Q" Lable="Q" Margin="170,180,0,0" HorizontalAlignment="Left" Width="30" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_R" Lable="R" Margin="220,180,0,0" HorizontalAlignment="Left" Width="30" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_S" Lable="S" HorizontalAlignment="Left" Width="30" Margin="270,180,0,0" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_T" Lable="T" HorizontalAlignment="Left" Width="30" Margin="320,180,0,0" Click="PlugButton_Click" Height="60" VerticalAlignment="Top"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_U" Lable="U" HorizontalAlignment="Left" Width="30" Margin="45,260,0,0" Height="60" VerticalAlignment="Top" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_V" Lable="V" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="95,260,0,0" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_W" Lable="W" Height="60" VerticalAlignment="Top" Margin="145,260,0,0" HorizontalAlignment="Left" Width="30" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_X" Lable="X" Margin="195,260,0,0" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left" Width="30" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_Y" Lable="Y" Margin="245,260,0,0" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Click="PlugButton_Click"></control:PlugButton>
+        <control:PlugButton x:Name="plugButton_Z" Lable="Z" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="295,260,0,0" Click="PlugButton_Click"></control:PlugButton>
+        <Button Height="23" Margin="148,0,149,15" Name="button_Reset" VerticalAlignment="Bottom" Click="button_Reset_Click">Reset</Button>
+    </Grid>
+</Window>

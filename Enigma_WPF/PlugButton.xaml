@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="EnigmaWPF.PlugButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="60" Width="30">
+    <Grid>
+        <TextBlock FontSize="26" Name="lable" TextAlignment="Center" Margin="0,0,0,30" />
+        <TextBlock FontSize="26" Name="plugNum" Height="30" Width="30" TextAlignment="Center" Margin="0,30,0,0" IsEnabled="True" Text="" />
+        <Ellipse Margin="0,30,0,0" Name="ellipse" Stroke="Black" Opacity="0.3" Fill="SkyBlue" MouseDown="ellipse_MouseDown"/>
+    </Grid>
+</UserControl>

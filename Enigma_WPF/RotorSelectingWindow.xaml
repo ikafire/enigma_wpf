@@ -21,5 +21,7 @@
         <Button Content="↓" Height="23" HorizontalAlignment="Left" Margin="399,167,0,0" Name="button_RotorMoveDown" VerticalAlignment="Top" Width="22" ToolTip="Move down" Click="button_RotorMoveDown_Click" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="162,12,0,0" Name="textBlock1" Text="Rotor" VerticalAlignment="Top" FontSize="24" FontFamily="Courier New" />
         <TextBlock FontFamily="Courier New" FontSize="24" Height="23" HorizontalAlignment="Left" Margin="455,12,0,0" Name="textBlock2" Text="Reflector" VerticalAlignment="Top" />
+        <Button Height="23" HorizontalAlignment="Left" Margin="22,0,0,14" Name="button_ShowRotorWiring" VerticalAlignment="Bottom" Width="84" Click="button_ShowRotorWiring_Click">Show Wiring</Button>
+        <Button Content="Show Wiring" Height="23" HorizontalAlignment="Left" Margin="496,151,0,0" Name="button_ShowReflectorWiring" VerticalAlignment="Top" Width="84" Click="button_ShowReflectorWiring_Click"/>
     </Grid>
 </Window>

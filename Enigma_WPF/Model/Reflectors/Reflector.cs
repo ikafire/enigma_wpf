@@ -6,7 +6,7 @@ namespace EnigmaWPF.Model
     /// 所有Reflector的父類別
     /// </summary>
     [Serializable]
-    public class Reflector
+    public class Reflector : IPart
     {
         public virtual string Name { get; set; }
 
@@ -14,6 +14,11 @@ namespace EnigmaWPF.Model
 
         protected Reflector()
         {
+        }
+
+        public int[] Notches
+        {
+            get { return null; }
         }
 
         public Reflector(Reflector reflector)
